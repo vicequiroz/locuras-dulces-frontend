@@ -1,68 +1,206 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/*selector de etiqueta*/
+body{
+    background-color: rgb(143, 230, 217);
+    /*margin-left: 50px;*/
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+img {
+    display: block; /* Hace que la imagen se comporte como un bloque */
+    margin: auto;   /* Centra horizontalmente la imagen */
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+h1{
+    font-family: Arial, Helvetica, sans-serif; /* fuente de paginas son 3 porque depende del navegador es cual usara para cada uno de ellos*/
+    color:rgb(247, 90, 218);
+    text-align: center; /*es para centrar el titulo*/
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+h2{
+    font-family: Arial, Helvetica, sans-serif; /* fuente de paginas son 3 porque depende del navegador es cual usara para cada uno de ellos*/
+    color:rgb(189, 19, 90);
+    text-align: center; /*es para centrar el titulo*/
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+p{
+    line-height: 1,5; /*Esto es para un interlineado de tamaño 2*/
+}
+
+
+/*Selector de tipo class para definir reglas mas especificas como en por ejemplo, poner un color en un titulo y en otra pagina otro color*/
+.titulo {
+  color: #d63384; /* rosa intenso */
+  font-weight: bold;
+  text-align: center; /* opcional, si quieres mantener centrado */
+}
+
+a{
+    color: rgb(23, 67, 178);
+    text-decoration:#d02e8a;
+    font-weight: 450; /* Para poner en Negrita el texto*/
+}
+
+.carousel-item img{
+    width: 100px;
+    height: 400px;
+}
+
+.navbar-dulces {
+  background: linear-gradient(180deg, #f29db1 0%, #f5b1c3 100%);/* rosado suave */
+  color: #5a2a27; /* marrón chocolate */
+}
+
+.navbar-dulces .nav-link {
+  color: #5a2a27; /* marrón chocolate */
+}
+
+.navbar-dulces .nav-link:hover {
+  color: #d63384; /* rosado fuerte */
+
+}
+
+.card img{
+  width: 200px;
+  height: 200px;
+}
+
+.card {
+  border: 3px solid #ddd;              /* necesitas indicar color */
+  border-radius: 30px;                 /* redondea las esquinas */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* sombra con color */
+  transition: box-shadow 0.3s ease;    /* duración + unidad de tiempo */
+}
+
+.card-img-top {
+  border-top-left-radius: 20px; /* ajusta el valor según lo redondeado que quieras */
+  border-top-right-radius: 20px;
+}
+
+
+.price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #d02e8a; /* rosado oscuro */
+  margin-bottom: 10px;
+}
+
+/* estilos de index*/
+
+
+.especial {
+    font-family: 'Arial', Courier, monospace; /* cambia el tipo de letra */
+    font-size: 20px; /* cambia el tamaño */
+    color: rgb(0, 0, 0); /* cambia el color */
+}
+
+.formulario-fondo {
+  background-color: #fff3e0; /* color crema */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* sombra más marcada */
+  padding: 20px; /* para dar más espacio dentro */
+  border-radius: 15px; /* esquinas redondeadas */
+}
+
+
+/* Ajuste de padding para filas de productos */
+.row-productos {
+  padding-left: 15px;   /* iguala margen izquierdo */
+  
+}
+
+.caja {
+  margin: 20px auto;        /* espacio externo para separarlo */
+  padding: 20px;            /* espacio interno */
+  border: 1px solid #ccc;   /* borde gris claro */
+  border-radius: 10px;      /* esquinas redondeadas */
+  max-width: 1000px;        /* ancho máximo */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* sombra ligera */
+}
+
+
+
+.etiqueta{
+    color:rgb(223, 12, 135);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bolder;
+    font-size: 14px;
+}
+
+.img-producto {
+  width: 150px !important;  /* o el tamaño que quieras */
+  height: 200px !important;
+  object-fit: contain; /*o usar cover//-> mantiene la proporción aunque queden espacios vacíos */
+  border-top-left-radius: 20px; 
+  border-top-right-radius: 20px;
+  margin: 0 auto; /* para centrar */
+  display: block;
+}
+
+#saludoUsuario {
+  color: #5a2a27; /* marrón chocolate */
+  margin-right: 10px;
+}
+
+#btnCerrarSesion {
+  background-color: transparent;
+  border: 1px solid #5a2a27;
+  color: #5a2a27;
+  padding: 5px 10px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  font-size: 0.9rem;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+#btnCerrarSesion:hover {
+  background-color: #d63384; /* rosado fuerte al pasar el mouse */
+  color: #fff;
+  border-color: #d63384;
 }
+
+.footer {
+  background: linear-gradient(180deg, #f29db1 0%, #f5b1c3 100%);
+  padding: 40px 0;
+  color: #5a2a27; /* marrón chocolate */
+}
+
+.footer-logo {
+  max-width: 180px;
+}
+
+.footer-title {
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #5a2a27;
+}
+
+.footer a {
+  color: #5a2a27;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: #d63384; /* rosado fuerte */
+  text-decoration: underline;
+}
+
+.footer-img {
+  max-height: 70px;
+}
+
+.footer p {
+  color: #5a2a27;
+}
+
+.img-blog {
+      max-width: 100%;
+      max-height: 250px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+.destacados-box {
+  background: linear-gradient(180deg, #f29db1 0%, #f5b1c3 100%);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
