@@ -16,7 +16,7 @@ export function Navbar() {
 
   return (
     <nav className="navbar navbar-expand-sm navbar-dulces">
-      <div className="container d-flex align-items-center justify-content-between">
+      <div className="container-fluid d-flex align-items-center justify-content-between">
         <div className="d-flex align-items-center">
           <Link className="navbar-brand me-3" to="/">
             <img

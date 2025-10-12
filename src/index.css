@@ -1,7 +1,7 @@
-/*selector de etiqueta*/
+
 body{
     background-color: rgb(143, 230, 217);
-    /*margin-left: 50px;*/
+    margin-left: 0px;
 }
 
 img {
@@ -204,3 +204,9 @@ a{
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
+.titulo-nosotros {
+  font-size: 3rem;          /* tamaño grande */
+  font-weight: 700;          /* negrita */
+  text-shadow: 2px 2px rgba(0,0,0,0.1); /* sombra suave */
+  /* color lo mantiene igual que tu tema actual, o puedes especificar */
+}

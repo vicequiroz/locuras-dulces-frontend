@@ -6,11 +6,14 @@ import { Footer } from "../../componentes/Footer/Footer";
 
 export function Home() {
   return (
-    <div className="container">
+    <div className="container-fluid">
       <Navbar />
       <Carrusel />
       <Destacados />
       <Footer />
+    
+      
+    
     </div>
   );
 }
