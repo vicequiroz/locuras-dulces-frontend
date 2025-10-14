@@ -6,8 +6,8 @@ import { Home } from './pages/Home/Home';
 
 //import { Contacto } from './pages/Contacto/Contacto';
 //import { Inventario } from './pages/Inventario/Inventario';
-import  Blogs  from './pages/Home/Blogs/Blogs';
-import Nosotros  from './pages/Home/Nosotros/Nosotros';
+import { Blogs }  from './pages/Blogs/Blogs';
+import { Nosotros }  from './pages/Nosotros/Nosotros';
 //import { Carrito } from './pages/Carrito/Carrito';
 //import { Login } from './pages/Login/Login';
 //import { Registro } from './pages/Registro/Registro';
