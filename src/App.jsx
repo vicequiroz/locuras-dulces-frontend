@@ -9,7 +9,7 @@ import { Home } from './pages/Home/Home';
 import  Blogs  from './pages/Home/Blogs/Blogs';
 import Nosotros  from './pages/Home/Nosotros/Nosotros';
 //import { Carrito } from './pages/Carrito/Carrito';
-//import { Login } from './pages/Login/Login';
+import Login  from './componentes/Login/Login';
 import Registro from './componentes/Registro/Registro';
 
 
@@ -32,8 +32,8 @@ function App() {
         <Route path="/inventario" element={<Inventario //} />*/}
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/nosotros" element={<Nosotros />} />
-        {/* <Route path="/carrito" element={<Carrito />} />
-        <Route path="/login" element={<Login />} />*/}
+        {/* <Route path="/carrito" element={<Carrito />} />*/}
+        <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />}/>
         {/*<Route path="/detalleproducto/:id" element={<DetalleProducto />} />
 

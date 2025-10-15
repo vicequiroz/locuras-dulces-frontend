@@ -1,0 +1,13 @@
+/* Login.css o Home.css */
+button {
+  padding: 10px 20px;
+  background-color: #ff6f61;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #ff4c3b;
+}

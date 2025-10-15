@@ -27,6 +27,22 @@ export function Home() {
             onMouseOut={(e) => (e.target.style.backgroundColor = "#c91678ff")}>Registrarse</button>
         </Link>
 
+        <Link to="/login">
+          <button
+            style={{
+              padding: "12px 30px",
+              fontSize: "16px",
+              borderRadius: "25px",  // 🔹 puntas redondeadas
+              border: "none",
+              backgroundColor: "#c327a1ff", // verde bonito
+              color: "white",
+              cursor: "pointer",
+              transition: "all 0.3s ease", // animación al pasar el mouse
+            }}
+            onMouseOver={(e) => (e.target.style.backgroundColor = "#4CAF50")}
+            onMouseOut={(e) => (e.target.style.backgroundColor = "#c91678ff")}>Iniciar Sesion</button>
+        </Link>
+
       </div>
        <Carrusel />
       <Destacados />
