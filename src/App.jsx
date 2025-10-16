@@ -10,7 +10,9 @@ import { Blogs }  from './pages/Blogs/Blogs';
 import { Nosotros }  from './pages/Nosotros/Nosotros';
 //import { Carrito } from './pages/Carrito/Carrito';
 //import { Login } from './pages/Login/Login';
-//import { Registro } from './pages/Registro/Registro';
+//import {Registro} from './components/Registro/Registro';
+
+
 //import { Dashboard } from './pages/Dashboard/Dashboard';
 //import { DetalleProducto } from './pages/DetalleProducto/DetalleProducto';
 
@@ -31,9 +33,9 @@ function App() {
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/nosotros" element={<Nosotros />} />
         {/* <Route path="/carrito" element={<Carrito />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/registro" element={<Registro />} />
-        <Route path="/detalleproducto/:id" element={<DetalleProducto />} /> */}
+        <Route path="/login" element={<Login />} />*/}
+        {/*<Route path="/registro" element={<Registro />}/>*/}
+        {/*<Route path="/detalleproducto/:id" element={<DetalleProducto />} />
 
 
         {/* 🛠️ Módulos administrativos */}
