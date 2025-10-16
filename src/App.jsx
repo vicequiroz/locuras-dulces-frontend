@@ -9,8 +9,8 @@ import { Home } from './pages/Home/Home';
 import { Blogs }  from './pages/Blogs/Blogs';
 import { Nosotros }  from './pages/Nosotros/Nosotros';
 //import { Carrito } from './pages/Carrito/Carrito';
-//import { Login } from './pages/Login/Login';
-//import {Registro} from './components/Registro/Registro';
+import Login  from './componentes/Login/Login';
+import Registro from './componentes/Registro/Registro';
 
 
 //import { Dashboard } from './pages/Dashboard/Dashboard';
@@ -32,9 +32,9 @@ function App() {
         <Route path="/inventario" element={<Inventario //} />*/}
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/nosotros" element={<Nosotros />} />
-        {/* <Route path="/carrito" element={<Carrito />} />
-        <Route path="/login" element={<Login />} />*/}
-        {/*<Route path="/registro" element={<Registro />}/>*/}
+        {/* <Route path="/carrito" element={<Carrito />} />*/}
+        <Route path="/login" element={<Login />} />
+        <Route path="/registro" element={<Registro />}/>
         {/*<Route path="/detalleproducto/:id" element={<DetalleProducto />} />
 
 
