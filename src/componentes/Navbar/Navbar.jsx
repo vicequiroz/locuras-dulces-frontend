@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-export function Navbar() {
+export function Navbar({usuario:usuarioProp}) {
+  
   const [usuario, setUsuario] = useState(null);
 
   useEffect(() => {
@@ -28,7 +29,7 @@ export function Navbar() {
           </Link>
           <div className="text-white">
             <span className="fw-bold">
-              {usuario ? `Hola, ${usuario} 👋` : "Bienvenido, visitante"}
+              {usuario ? `Hola, ${usuario.nombre} 👋` : "Bienvenido, visitante"}
             </span>
             {usuario && (
               <button

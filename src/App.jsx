@@ -3,11 +3,11 @@ import './App.css';
 
 // 🧩 Páginas
 import { Home } from './pages/Home/Home';
-
+import HomeAdmin from "./pages/Admin/HomeAdmin";
 //import { Contacto } from './pages/Contacto/Contacto';
 //import { Inventario } from './pages/Inventario/Inventario';
-//import { Blogs }  from './pages/Blogs/Blogs';
-//import { Nosotros }  from './pages/Nosotros/Nosotros';
+import Blogs   from './pages/Blogs/Blogs';
+import Nosotros  from './pages/Nosotros/Nosotros';
 //import { Carrito } from './pages/Carrito/Carrito';
 import Login  from './componentes/Login/Login';
 import Registro from './componentes/Registro/Registro';
@@ -17,6 +17,7 @@ import Registro from './componentes/Registro/Registro';
 //import { DetalleProducto } from './pages/DetalleProducto/DetalleProducto';
 
 // 🧩 Componentes de gestión
+
 // import { CrearProducto } from './componentes/CrearProd/CrearProducto';
 // import { EditarProducto } from './componentes/EditarProd/EditarProducto';
 // import { GestionUsuarios } from './componentes/GestionUsuarios/GestionUsuarios';
@@ -39,8 +40,8 @@ function App() {
 
 
         {/* 🛠️ Módulos administrativos */}
-        {/* <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/crear-producto" element={<CrearProducto />} />
+        <Route path="/home-admin" element={<HomeAdmin />} />
+        {/*<Route path="/crear-producto" element={<CrearProducto />} />
         <Route path="/editar-producto/:id" element={<EditarProducto />} />
         <Route path="/usuarios" element={<GestionUsuarios />} /> */}
       </Routes>
