@@ -2,7 +2,7 @@ import React from "react";
 import { Navbar } from "../../componentes/Navbar/Navbar";
 import { Footer } from "../../componentes/Footer/Footer";
 
-export default function Blog() {
+export function Blogs() {
   return (
     <>
       <Navbar />

@@ -21,7 +21,7 @@ const regiones = [
   { nombre: "Biobío", comunas: ["Concepción","Chillán","Los Ángeles"] },
 ];
 
-export default function Registro() {
+export function Registro() {
   const [usuario, setUsuario] = useState({
     nombre: "",
     correo: "",

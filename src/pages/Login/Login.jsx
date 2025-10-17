@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Navbar } from "../../componentes/Navbar/Navbar";
 import { Footer } from "../../componentes/Footer/Footer";
 
-export default function Login() {
+export function Login() {
 
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState({

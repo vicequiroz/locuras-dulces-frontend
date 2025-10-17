@@ -6,11 +6,11 @@ import { Home } from './pages/Home/Home';
 import HomeAdmin from "./pages/Admin/HomeAdmin";
 //import { Contacto } from './pages/Contacto/Contacto';
 //import { Inventario } from './pages/Inventario/Inventario';
-import Blogs   from './pages/Blogs/Blogs';
-import Nosotros  from './pages/Nosotros/Nosotros';
+import { Blogs }   from './pages/Blogs/Blogs';
+import { Nosotros } from './pages/Nosotros/Nosotros';
 //import { Carrito } from './pages/Carrito/Carrito';
-import Login  from './componentes/Login/Login';
-import Registro from './componentes/Registro/Registro';
+import { Login }  from './pages/Login/Login';
+import { Registro } from './pages/Registro/Registro';
 
 
 //import { Dashboard } from './pages/Dashboard/Dashboard';
@@ -31,8 +31,8 @@ function App() {
         <Route path="/" element={<Home />} />
         {/* <Route path="/contacto" element={<Contacto />} />
         <Route path="/inventario" element={<Inventario //} />*/}
-        {/* <Route path="/blogs" element={<Blogs />} />
-        <Route path="/nosotros" element={<Nosotros />} /> */}
+        <Route path="/blogs" element={<Blogs />} />
+        <Route path="/nosotros" element={<Nosotros />} />
         {/* <Route path="/carrito" element={<Carrito />} />*/}
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />}/>
