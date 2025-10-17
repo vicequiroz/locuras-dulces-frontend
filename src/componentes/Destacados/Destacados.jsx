@@ -4,7 +4,7 @@ export function Destacados() {
   const [productos, setProductos] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/productos?destacado=true")
+    fetch("http://localhost:8080/api/productos/destacados")
       .then((res) => res.json())
       .then((data) => setProductos(data))
       .catch((error) => console.error("Error al cargar productos destacados:", error));
