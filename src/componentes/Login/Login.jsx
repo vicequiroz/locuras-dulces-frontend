@@ -4,6 +4,7 @@ import { Navbar } from "../../componentes/Navbar/Navbar";
 import { Footer } from "../../componentes/Footer/Footer";
 
 export default function Login() {
+
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState({
     correo: "",
@@ -63,14 +64,20 @@ export default function Login() {
         return;
       }
 
-      const data = await response.json();
+    const data = await response.json();
 
-      // Redirección según correo (admin o usuario)
-      if (data.correo === "admin@locurasdulces.cl") {
-        navigate("/home-admin");
+     // Guardar usuario en localStorage
+    localStorage.setItem("usuarioActivo", JSON.stringify(data));
+
+
+      // Redirección según rol
+      if (data.rol?.toUpperCase()=== "ADMIN") {
+          navigate("/home-admin", { state: { usuario: data } });
       } else {
-        navigate("/home");
+          navigate("/home", { state: { usuario: data } });
       }
+
+
 
     } catch (err) {
       console.error(err);

@@ -1,0 +1,45 @@
+/* Contenedor general */
+.admin-container {
+  display: flex;
+  min-height: 80vh;
+  font-family: Arial, sans-serif;
+}
+
+/* Sidebar lateral */
+.sidebar {
+  width: 220px;
+  background-color: #f29db1;
+  padding: 30px 20px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.sidebar h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.sidebar-btn {
+  background-color: #2bcfc4;
+  color: white;
+  text-decoration: none;
+  padding: 12px;
+  border-radius: 6px;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.sidebar-btn:hover {
+  background-color: #eb48bc;
+}
+
+/* Contenido principal */
+.main-content {
+  flex: 1;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 0 10px 10px 0;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+}
