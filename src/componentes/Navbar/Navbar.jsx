@@ -1,18 +1,20 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-export function Navbar({usuario:usuarioProp}) {
-  
+export function Navbar() {
   const [usuario, setUsuario] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const usuarioActivo = localStorage.getItem("usuarioActivo");
-    setUsuario(usuarioActivo);
+    if (usuarioActivo) {
+      setUsuario(JSON.parse(usuarioActivo));
+    }
   }, []);
 
   const cerrarSesion = () => {
     localStorage.removeItem("usuarioActivo");
-    window.location.reload();
+    navigate("/login");
   };
 
   return (
@@ -29,7 +31,7 @@ export function Navbar({usuario:usuarioProp}) {
           </Link>
           <div className="text-white">
             <span className="fw-bold">
-              {usuario ? `Hola, ${usuario.nombre} 👋` : "Bienvenido, visitante"}
+              {usuario ? `Hola, ${usuario.nombre} (${usuario.rol}) 👋` : "Bienvenido, visitante"}
             </span>
             {usuario && (
               <button
@@ -60,24 +62,35 @@ export function Navbar({usuario:usuarioProp}) {
             <li className="nav-item">
               <Link className="nav-link" to="/">Home</Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/productos">Nuestros Productos</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/inventario">Inventario</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/nosotros">Nosotros</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/blogs">Blogs</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/contacto">Contacto</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/carrito">🛒 Carrito</Link>
-            </li>
+            {usuario?.rol === "ADMIN" && (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/inventario">Inventario</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/gestion-usuarios">Gestión de Usuarios</Link>
+                </li>
+              </>
+            )}
+            {usuario?.rol !== "ADMIN" && (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/productos">Nuestros Productos</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/blogs">Blogs</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/nosotros">Nosotros</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/contacto">Contacto</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/carrito">🛒 Carrito</Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>

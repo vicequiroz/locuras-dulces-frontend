@@ -1,64 +1,72 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom"
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Navbar } from "../../componentes/Navbar/Navbar";
 import { Footer } from "../../componentes/Footer/Footer";
-import { useNavigate } from "react-router-dom";
-
 import "./HomeAdmin.css";
 
-export default function HomeAdmin() {
+export function HomeAdmin() {
+  const [usuario, setUsuario] = useState(null);
+  const navigate = useNavigate();
 
-    const location = useLocation();
-    const usuario = location.state?.usuario;
-    const navigate = useNavigate();
+  useEffect(() => {
+    const usuarioActivo = localStorage.getItem("usuarioActivo");
+    if (usuarioActivo) {
+      const user = JSON.parse(usuarioActivo);
+      if (user.rol === "ADMIN") {
+        setUsuario(user);
+      } else {
+        navigate("/"); // No es admin, redirige al home
+      }
+    } else {
+      navigate("/login"); // No hay sesión, redirige al login
+    }
+  }, [navigate]);
 
-    const cerrarSesion = () => {
-        localStorage.removeItem("usuarioActivo"); // Borra usuario guardado
-        navigate("/"); // Redirige al Home
-        };
-
+  const cerrarSesion = () => {
+    localStorage.removeItem("usuarioActivo");
+    navigate("/login");
+  };
 
   return (
     <>
-    <Navbar usuario={usuario}/>
-    <div className="admin-container">
-
-        
-      {/* Sidebar lateral */}
-      <div className="sidebar">
-        <h2>Panel Admin</h2>
-        <Link className="sidebar-btn" to="/admin/usuarios">
-          Gestión de Usuarios
-        </Link>
-
-        <Link className="sidebar-btn" to="/admin/productos">
-          Gestión de Productos
-        </Link>
-        <button onClick={cerrarSesion}
+      <Navbar />
+      <div className="admin-container">
+        {/* Sidebar lateral */}
+        <div className="sidebar">
+          <h2>Panel Admin</h2>
+          <Link className="sidebar-btn" to="/gestion-usuarios">
+            Gestión de Usuarios
+          </Link>
+          <Link className="sidebar-btn" to="/inventario">
+            Gestión de Productos
+          </Link>
+          <button
+            onClick={cerrarSesion}
             style={{
-            marginTop: "auto",       // lo empuja hacia abajo
-            padding: "10px 20px",
-            borderRadius: "8px",
-            border: "none",
-            backgroundColor: "#e74c3c",
-            color: "white",
-            cursor: "pointer"
-            }}>Cerrar sesión
-        </button>
+              marginTop: "auto",
+              padding: "10px 20px",
+              borderRadius: "8px",
+              border: "none",
+              backgroundColor: "#e74c3c",
+              color: "white",
+              cursor: "pointer",
+            }}
+          >
+            Cerrar sesión
+          </button>
+        </div>
 
+        {/* Contenido principal */}
+        <div className="main-content">
+          <h1>Bienvenido al panel de administración</h1>
+          <p>Desde aquí puedes gestionar usuarios y productos.</p>
+          <p>
+            Crea, edita y desactiva usuarios, administra el inventario y
+            destaca productos en tu tienda.
+          </p>
+        </div>
       </div>
-
-      
-
-      {/* Contenido principal */}
-      <div className="main-content">
-        <h1>Bienvenido al panel de administración</h1>
-        <p>Desde aquí puedes gestionar usuarios y productos.</p>
-        <p>Aquí puedes crear, editar y eliminar usuarios, así como administrar los productos de tu tienda.</p>
-    </div>
-
-    </div>
-    <Footer />
+      <Footer />
     </>
   );
 }
