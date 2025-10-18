@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Navbar } from '../Navbar/Navbar';
+import { Footer } from "../../componentes/Footer/Footer";
+import './EditarProducto.css';
 
 export function EditarProducto() {
   const { id } = useParams();
@@ -83,7 +85,6 @@ export function EditarProducto() {
 
     let urlImagen = producto.foto;
 
-    // Si se seleccionó una nueva imagen, se sube primero
     if (producto.nuevaFoto) {
       const formData = new FormData();
       formData.append("file", producto.nuevaFoto);
@@ -164,12 +165,12 @@ export function EditarProducto() {
   }
 
   return (
-    <>
+    <div className="d-flex flex-column min-vh-100">
       <Navbar />
 
-      <div className="container mt-3" style={{ maxWidth: '600px' }}>
-        <div className="card">
-          <div className="card-header bg-primary text-white d-flex justify-content-between align-items-center py-2">
+      <div className="editar-producto-container flex-grow-1">
+        <div className="editar-card">
+          <div className="editar-card-header d-flex justify-content-between align-items-center py-2 px-3 rounded-top">
             <h6 className="mb-0">Editar Producto</h6>
             <button
               onClick={handleVolver}
@@ -291,6 +292,8 @@ export function EditarProducto() {
           </div>
         </div>
       </div>
-    </>
+
+      <Footer />
+    </div>
   );
 }
