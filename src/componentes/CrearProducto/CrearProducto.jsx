@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Navbar } from "../../componentes/Navbar/Navbar";
-import './CrearProducto.css';
+//import './CrearProducto.css';
 
 const API_BASE_URL = 'http://localhost:8080/api';
 

@@ -64,6 +64,9 @@ export function Navbar({usuario:usuarioProp}) {
               <Link className="nav-link" to="/productos">Nuestros Productos</Link>
             </li>
             <li className="nav-item">
+              <Link className="nav-link" to="/inventario">Inventario</Link>
+            </li>
+            <li className="nav-item">
               <Link className="nav-link" to="/nosotros">Nosotros</Link>
             </li>
             <li className="nav-item">

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import './Productos.css'; // opcional si tienes estilos específicos
+//import './Productos.css'; // opcional si tienes estilos específicos
 
 export function Productos() {
   const [productos, setProductos] = useState([]);

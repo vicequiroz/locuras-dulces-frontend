@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Navbar } from '../Navbar/Navbar';
 
-export function EditarProd() {
+export function EditarProducto() {
   const { id } = useParams();
   const navigate = useNavigate();
   const productoId = parseInt(id);
