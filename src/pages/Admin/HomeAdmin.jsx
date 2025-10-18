@@ -12,7 +12,7 @@ export function HomeAdmin() {
     const usuarioActivo = localStorage.getItem("usuarioActivo");
     if (usuarioActivo) {
       const user = JSON.parse(usuarioActivo);
-      if (user.rol === "ADMIN") {
+      if (user.rol === "SUPER-ADMIN") {
         setUsuario(user);
       } else {
         navigate("/"); // No es admin, redirige al home

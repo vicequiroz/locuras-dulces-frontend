@@ -71,7 +71,7 @@ export function Login() {
 
 
       // Redirección según rol
-      if (data.rol?.toUpperCase()=== "ADMIN") {
+      if (data.rol?.toUpperCase()=== "SUPER-ADMIN") {
           navigate("/home-admin", { state: { usuario: data } });
       } else {
           navigate("/home", { state: { usuario: data } });
