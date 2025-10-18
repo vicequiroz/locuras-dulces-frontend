@@ -4,46 +4,38 @@ import './App.css';
 // 🧩 Páginas
 import { Home } from './pages/Home/Home';
 import HomeAdmin from "./pages/Admin/HomeAdmin";
-//import { Contacto } from './pages/Contacto/Contacto';
 import { Inventario } from './pages/Inventario/Inventario';
-import { Blogs }   from './pages/Blogs/Blogs';
+import { Blogs } from './pages/Blogs/Blogs';
 import { Nosotros } from './pages/Nosotros/Nosotros';
-//import { Carrito } from './pages/Carrito/Carrito';
-import { Login }  from './pages/Login/Login';
+import { Login } from './pages/Login/Login';
 import { Registro } from './pages/Registro/Registro';
 
-
-//import { Dashboard } from './pages/Dashboard/Dashboard';
-//import { DetalleProducto } from './pages/DetalleProducto/DetalleProducto';
-
 // 🧩 Componentes de gestión
-
- import { CrearProducto } from './componentes/CrearProducto/CrearProducto';
- import { EditarProducto } from './componentes/EditarProducto/EditarProducto';
-// import { GestionUsuarios } from './componentes/GestionUsuarios/GestionUsuarios';
+import { CrearProducto } from './componentes/CrearProducto/CrearProducto';
+import { EditarProducto } from './componentes/EditarProducto/EditarProducto';
+import { GestionUsuarios } from './pages/GestionUsuarios';
+import { CrearUsuario } from './componentes/Usuarios/CrearUsuario';
+import { EditarUsuario } from './componentes/Usuarios/EditarUsuario';
 
 function App() {
   return (
     <Router>
       <Routes>
-
         {/* 🏠 Páginas principales */}
         <Route path="/" element={<Home />} />
-        {/* <Route path="/contacto" element={<Contacto />} />*/}
         <Route path="/inventario" element={<Inventario />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/nosotros" element={<Nosotros />} />
-        {/* <Route path="/carrito" element={<Carrito />} />*/}
         <Route path="/login" element={<Login />} />
-        <Route path="/registro" element={<Registro />}/>
-        {/*<Route path="/detalleproducto/:id" element={<DetalleProducto />} />
-
+        <Route path="/registro" element={<Registro />} />
 
         {/* 🛠️ Módulos administrativos */}
         <Route path="/home-admin" element={<HomeAdmin />} />
         <Route path="/crear-producto" element={<CrearProducto />} />
         <Route path="/editar-producto/:id" element={<EditarProducto />} />
-        {/*<Route path="/usuarios" element={<GestionUsuarios />} /> */}
+        <Route path="/gestion-usuarios" element={<GestionUsuarios />} />
+        <Route path="/crear-usuario" element={<CrearUsuario />} />
+        <Route path="/editar-usuario/:id" element={<EditarUsuario />} />
       </Routes>
     </Router>
   );

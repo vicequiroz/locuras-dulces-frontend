@@ -1,33 +1,43 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-//import './Productos.css'; // opcional si tienes estilos específicos
 
 export function Productos() {
   const [productos, setProductos] = useState([]);
+  const [busqueda, setBusqueda] = useState('');
+  const [categoriaFiltro, setCategoriaFiltro] = useState('');
+  const [categorias, setCategorias] = useState([]);
 
   const cargarProductos = async () => {
     try {
       const response = await fetch('http://localhost:8080/api/productos');
-      if (!response.ok) {
-        throw new Error('Error en la respuesta del servidor');
-      }
-
+      if (!response.ok) throw new Error('Error en la respuesta del servidor');
       const data = await response.json();
-      console.log("Respuesta del backend:", data);
 
-      const productosNormalizados = data.map(p => ({
+      const normalizados = data.map(p => ({
         ...p,
         activo: p.activo === true || p.activo === 'true',
       }));
 
-      setProductos(productosNormalizados);
+      setProductos(normalizados);
     } catch (error) {
       console.error('Error al obtener los productos:', error);
     }
   };
 
+  const cargarCategorias = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/api/categorias');
+      if (!response.ok) throw new Error('Error al obtener categorías');
+      const data = await response.json();
+      setCategorias(data);
+    } catch (error) {
+      console.error('Error al obtener categorías:', error);
+    }
+  };
+
   useEffect(() => {
     cargarProductos();
+    cargarCategorias();
   }, []);
 
   const handleDesactivar = (id, nombre) => {
@@ -36,13 +46,10 @@ export function Productos() {
         method: 'PATCH'
       })
         .then(response => {
-          if (!response.ok) {
-            throw new Error('Error al desactivar el producto');
-          }
+          if (!response.ok) throw new Error('Error al desactivar el producto');
           return response.json();
         })
-        .then(data => {
-          console.log('Producto desactivado:', data);
+        .then(() => {
           alert('Producto desactivado exitosamente');
           cargarProductos();
         })
@@ -53,13 +60,40 @@ export function Productos() {
     }
   };
 
+  const productosFiltrados = productos.filter(p => {
+    const coincideNombre = p.nombre.toLowerCase().includes(busqueda.toLowerCase());
+    const coincideCategoria = categoriaFiltro ? p.categoria?.id === parseInt(categoriaFiltro) : true;
+    return coincideNombre && coincideCategoria;
+  });
+
   return (
-    <div className="container mi-tabla">
-      <h3 className="text-center mb-4">🍬 Inventario Locuras Dulces 🍬</h3>
+    <div className="container mi-tabla mt-5">
+      <h3 className="text-center mb-4 mt-5">🍬 Inventario Locuras Dulces 🍬</h3>
 
       <div className="row mb-3">
-        <div className="col-12 text-end">
-          <Link className="btn btn-outline-success" to="/crear-producto">
+        <div className="col-md-6">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Buscar por nombre..."
+            value={busqueda}
+            onChange={(e) => setBusqueda(e.target.value)}
+          />
+        </div>
+        <div className="col-md-4">
+          <select
+            className="form-select"
+            value={categoriaFiltro}
+            onChange={(e) => setCategoriaFiltro(e.target.value)}
+          >
+            <option value="">Todas las categorías</option>
+            {categorias.map(cat => (
+              <option key={cat.id} value={cat.id}>{cat.nombre}</option>
+            ))}
+          </select>
+        </div>
+        <div className="col-md-2 text-end">
+          <Link className="btn btn-outline-success w-100" to="/crear-producto">
             ➕ Agregar producto
           </Link>
         </div>
@@ -82,7 +116,7 @@ export function Productos() {
               </tr>
             </thead>
             <tbody>
-              {productos.map((prod) => (
+              {productosFiltrados.map((prod) => (
                 <tr key={prod.id}
                   style={{
                     opacity: prod.activo ? 1 : 0.5,
@@ -91,15 +125,20 @@ export function Productos() {
                   <td>{prod.id}</td>
                   <td>
                     {prod.foto ? (
-                        <img src={prod.foto} alt={prod.nombre} style={{ width: '60px', borderRadius: '8px' }} />
+                      <img src={prod.foto} alt={prod.nombre} style={{ width: '60px', borderRadius: '8px' }} />
                     ) : (
-                        <span className="text-muted">Sin imagen</span>
+                      <span className="text-muted">Sin imagen</span>
                     )}
                   </td>
                   <td>{prod.nombre}</td>
                   <td>{prod.descripcion}</td>
                   <td>${prod.precio.toLocaleString()}</td>
-                  <td>{prod.stock ?? '—'}</td>
+                  <td>
+                    {prod.stock}
+                    {prod.stock < 5 && (
+                      <span className="badge bg-warning text-dark ms-2">Stock bajo</span>
+                    )}
+                  </td>
                   <td>{prod.categoria?.nombre}</td>
                   <td>
                     {prod.activo ? (

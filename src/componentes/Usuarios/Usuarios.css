@@ -1,0 +1,62 @@
+/* Espaciado general */
+.container {
+  max-width: 900px;
+  margin: auto;
+}
+
+/* Título centrado */
+h4 {
+  font-weight: 600;
+  color: #5c3d91;
+}
+
+/* Etiquetas */
+.form-label {
+  font-weight: 500;
+  color: #333;
+}
+
+/* Inputs y selects */
+.form-control,
+.form-select {
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #5c3d91;
+  box-shadow: 0 0 0 0.2rem rgba(92, 61, 145, 0.25);
+}
+
+/* Botones */
+.btn-primary {
+  background-color: #5c3d91;
+  border-color: #5c3d91;
+}
+
+.btn-primary:hover {
+  background-color: #4a2f78;
+  border-color: #4a2f78;
+}
+
+.btn-secondary {
+  background-color: #ccc;
+  border-color: #aaa;
+}
+
+.btn-secondary:hover {
+  background-color: #bbb;
+  border-color: #999;
+}
+
+/* Alertas */
+.alert {
+  font-size: 0.9rem;
+}
+
+/* Spinner */
+.spinner-border {
+  color: #5c3d91;
+}
