@@ -13,7 +13,7 @@ import { HomeAdmin } from "./pages/Admin/HomeAdmin";
 import { CrearProducto } from './componentes/CrearProducto/CrearProducto';
 import { EditarProducto } from './componentes/EditarProducto/EditarProducto';
 import { Inventario } from './pages/Inventario/Inventario';
-import { GestionUsuarios } from './pages/GestionUsuarios';
+import { GestionUsuarios } from "./pages/GestionUsuarios/GestionUsuarios";
 import { CrearUsuario } from './componentes/Usuarios/CrearUsuario';
 import { EditarUsuario } from './componentes/Usuarios/EditarUsuario';
 
