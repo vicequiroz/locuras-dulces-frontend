@@ -18,8 +18,8 @@ import { Registro } from './pages/Registro/Registro';
 
 // 🧩 Componentes de gestión
 
-// import { CrearProducto } from './componentes/CrearProd/CrearProducto';
-// import { EditarProducto } from './componentes/EditarProd/EditarProducto';
+ import { CrearProducto } from './componentes/CrearProducto/CrearProducto';
+ import { EditarProducto } from './componentes/EditarProducto/EditarProducto';
 // import { GestionUsuarios } from './componentes/GestionUsuarios/GestionUsuarios';
 
 function App() {
@@ -41,9 +41,9 @@ function App() {
 
         {/* 🛠️ Módulos administrativos */}
         <Route path="/home-admin" element={<HomeAdmin />} />
-        {/*<Route path="/crear-producto" element={<CrearProducto />} />
+        <Route path="/crear-producto" element={<CrearProducto />} />
         <Route path="/editar-producto/:id" element={<EditarProducto />} />
-        <Route path="/usuarios" element={<GestionUsuarios />} /> */}
+        {/*<Route path="/usuarios" element={<GestionUsuarios />} /> */}
       </Routes>
     </Router>
   );
