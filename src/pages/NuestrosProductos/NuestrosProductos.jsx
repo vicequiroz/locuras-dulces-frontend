@@ -6,8 +6,7 @@ export function NuestrosProductos() {
   const [productos, setProductos] = useState([]);
 
   useEffect(() => {
-    // Trae todos los productos
-    fetch("http://localhost:8080/api/productos")
+    fetch("http://localhost:8080/api/productos") // Todos los productos
       .then((res) => res.json())
       .then((data) => setProductos(data))
       .catch((error) => console.error("Error al cargar productos:", error));
@@ -19,28 +18,17 @@ export function NuestrosProductos() {
 
       <section className="container mt-5 flex-grow-1">
         <h2 className="text-center mb-4">🍬 Nuestros Productos 🍬</h2>
-        <div className="row justify-content-center">
+        <div className="row g-4 justify-content-center">
           {productos.map((p) => (
-            <div className="col-md-3 mb-4" key={p.id}>
+            <div className="col-md-4 col-sm-6" key={p.id}>
               <div className="card h-100">
                 <a href={`/detalleproducto/${p.id}`}>
-                  {p.foto ? (
-                    <img className="card-img-top" src={p.foto} alt={p.nombre} />
-                  ) : (
-                    <div
-                      style={{
-                        height: "180px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        backgroundColor: "#f0f0f0",
-                        color: "#888",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Sin imagen
-                    </div>
-                  )}
+                  <img
+                    className="card-img-top"
+                    src={p.foto}
+                    alt={p.nombre}
+                    style={{ height: "200px", objectFit: "cover" }}
+                  />
                 </a>
                 <div className="card-body text-center">
                   <h5 className="card-title">
@@ -53,7 +41,9 @@ export function NuestrosProductos() {
                   </h5>
                   <p className="price">${p.precio.toLocaleString()}</p>
                   <p className="card-text">{p.descripcion}</p>
-                  <button className="btn btn-outline-success btn-sm">Agregar</button>
+                  <button className="btn btn-outline-success btn-sm">
+                    Agregar
+                  </button>
                 </div>
               </div>
             </div>

@@ -15,7 +15,8 @@ export function Destacados() {
       <h2 className="text-center mb-4">✨ Productos Destacados ✨</h2>
       <div className="row justify-content-center" id="destacados-index">
         {productos.map((p) => (
-          <div className="col-md-3 mb-4" key={p.id}>
+          <div className="col-md-4 col-sm-6 mb-4" key={p.id}>
+
             <div className="card h-100">
               <a href={`/detalleproducto/${p.id}`}>
                 <img className="card-img-top" src={p.foto} alt={p.nombre} />

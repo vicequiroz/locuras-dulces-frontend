@@ -40,20 +40,7 @@ export function HomeAdmin() {
           <Link className="sidebar-btn" to="/inventario">
             Gestión de Productos
           </Link>
-          <button
-            onClick={cerrarSesion}
-            style={{
-              marginTop: "auto",
-              padding: "10px 20px",
-              borderRadius: "8px",
-              border: "none",
-              backgroundColor: "#e74c3c",
-              color: "white",
-              cursor: "pointer",
-            }}
-          >
-            Cerrar sesión
-          </button>
+       
         </div>
 
         {/* Contenido principal */}
