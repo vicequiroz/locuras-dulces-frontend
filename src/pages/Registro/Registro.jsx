@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "../../componentes/Navbar/Navbar";
 import { Footer } from "../../componentes/Footer/Footer";
+import "./Registro.css";
 
 const regiones = [
   {
@@ -19,6 +20,7 @@ export function Registro() {
     nombre: "",
     correo: "",
     contrasena: "",
+    confirmarContrasena: "",
     telefono: "",
     direccion: "",
     region: "",
@@ -32,12 +34,12 @@ export function Registro() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUsuario((prev) => ({ ...prev, [name]: value }));
+    setUsuario(prev => ({ ...prev, [name]: value }));
 
     if (name === "region") {
-      const regionSeleccionada = regiones.find((r) => r.nombre === value);
+      const regionSeleccionada = regiones.find(r => r.nombre === value);
       setComunasDisponibles(regionSeleccionada ? regionSeleccionada.comunas : []);
-      setUsuario((prev) => ({ ...prev, comuna: "" }));
+      setUsuario(prev => ({ ...prev, comuna: "" }));
     }
 
     validarCampo(name, value);
@@ -59,8 +61,12 @@ export function Registro() {
         if (!value) error = "La contraseña es obligatoria.";
         else if (value.length < 6) error = "Debe tener al menos 6 caracteres.";
         break;
+      case "confirmarContrasena":
+        if (!value) error = "Debes confirmar la contraseña.";
+        else if (value !== usuario.contrasena) error = "Las contraseñas no coinciden.";
+        break;
       case "telefono":
-        if (value && !/^\d{7,15}$/.test(value)) error = "Solo números (7-15 dígitos).";
+        if (value && !/^\d{7,10}$/.test(value)) error = "Solo números (7-10 dígitos).";
         break;
       case "region":
         if (!value) error = "Debe seleccionar una región.";
@@ -72,24 +78,21 @@ export function Registro() {
         break;
     }
 
-    setErrores((prev) => ({ ...prev, [name]: error }));
+    setErrores(prev => ({ ...prev, [name]: error }));
   };
 
   const validarFormulario = () => {
-    const campos = ["nombre", "correo", "contrasena", "region", "comuna"];
+    const campos = ["nombre","correo","contrasena","confirmarContrasena","region","comuna"];
     let valido = true;
-
-    campos.forEach((campo) => {
+    campos.forEach(campo => {
       validarCampo(campo, usuario[campo]);
       if (!usuario[campo] || errores[campo]) valido = false;
     });
-
     return valido;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!validarFormulario()) {
       alert("Corrige los errores antes de continuar.");
       return;
@@ -120,85 +123,45 @@ export function Registro() {
   return (
     <div className="container-fluid">
       <Navbar />
+      <div className="registro-form-wrapper">
+        <div className="registro-card">
+          <h2>Registro de Usuario</h2>
+          <form onSubmit={handleSubmit}>
+            <input type="text" name="nombre" placeholder="Nombre completo" value={usuario.nombre} onChange={handleChange} />
+            {errores.nombre && <span className="error">{errores.nombre}</span>}
 
-      <div style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "80vh",
-        padding: "20px"
-      }}>
-        <div style={{
-          backgroundColor: "#f5f5f5",
-          padding: "30px",
-          borderRadius: "15px",
-          boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-          width: "500px"
-        }}>
-          <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Registro de Usuario</h2>
+            <input type="email" name="correo" placeholder="Correo electrónico" value={usuario.correo} onChange={handleChange} />
+            {errores.correo && <span className="error">{errores.correo}</span>}
 
-          <form style={{ display: "flex", flexDirection: "column", gap: "12px" }} onSubmit={handleSubmit}>
-            <input type="text" name="nombre" placeholder="Nombre completo" value={usuario.nombre} onChange={handleChange}
-              style={{ padding: "12px", fontSize: "16px", borderRadius: "8px", border: errores.nombre ? "2px solid red" : "1px solid #ccc" }} />
-            {errores.nombre && <span style={{ color: "red" }}>{errores.nombre}</span>}
+            <input type="password" name="contrasena" placeholder="Contraseña" value={usuario.contrasena} onChange={handleChange} />
+            {errores.contrasena && <span className="error">{errores.contrasena}</span>}
 
-            <input type="email" name="correo" placeholder="Correo electrónico" value={usuario.correo} onChange={handleChange}
-              style={{ padding: "12px", fontSize: "16px", borderRadius: "8px", border: errores.correo ? "2px solid red" : "1px solid #ccc" }} />
-            {errores.correo && <span style={{ color: "red" }}>{errores.correo}</span>}
+            <input type="password" name="confirmarContrasena" placeholder="Confirmar contraseña" value={usuario.confirmarContrasena} onChange={handleChange} />
+            {errores.confirmarContrasena && <span className="error">{errores.confirmarContrasena}</span>}
 
-            <input type="password" name="contrasena" placeholder="Contraseña" value={usuario.contrasena} onChange={handleChange}
-              style={{ padding: "12px", fontSize: "16px", borderRadius: "8px", border: errores.contrasena ? "2px solid red" : "1px solid #ccc" }} />
-            {errores.contrasena && <span style={{ color: "red" }}>{errores.contrasena}</span>}
+            <input type="tel" name="telefono" placeholder="Teléfono" value={usuario.telefono} onChange={handleChange} />
+            {errores.telefono && <span className="error">{errores.telefono}</span>}
 
-            <input type="tel" name="telefono" placeholder="Teléfono" value={usuario.telefono} onChange={handleChange}
-              style={{ padding: "12px", fontSize: "16px", borderRadius: "8px", border: errores.telefono ? "2px solid red" : "1px solid #ccc" }} />
-            {errores.telefono && <span style={{ color: "red" }}>{errores.telefono}</span>}
+            <input type="text" name="direccion" placeholder="Dirección" value={usuario.direccion} onChange={handleChange} />
 
-            <input type="text" name="direccion" placeholder="Dirección" value={usuario.direccion} onChange={handleChange}
-              style={{ padding: "12px", fontSize: "16px", borderRadius: "8px", border: "1px solid #ccc" }} />
-
-            <select name="region" value={usuario.region} onChange={handleChange}
-              style={{ padding: "12px", fontSize: "16px", borderRadius: "8px", border: errores.region ? "2px solid red" : "1px solid #ccc" }}>
+            <select name="region" value={usuario.region} onChange={handleChange}>
               <option value="">Seleccione una región</option>
-              {regiones.map((r) => (
-                <option key={r.nombre} value={r.nombre}>{r.nombre}</option>
-              ))}
+              {regiones.map(r => <option key={r.nombre} value={r.nombre}>{r.nombre}</option>)}
             </select>
-            {errores.region && <span style={{ color: "red" }}>{errores.region}</span>}
+            {errores.region && <span className="error">{errores.region}</span>}
 
-            <select name="comuna" value={usuario.comuna} onChange={handleChange} disabled={!usuario.region}
-              style={{ padding: "12px", fontSize: "16px", borderRadius: "8px", border: errores.comuna ? "2px solid red" : "1px solid #ccc" }}>
+            <select name="comuna" value={usuario.comuna} onChange={handleChange} disabled={!usuario.region}>
               <option value="">Seleccione una comuna</option>
-              {comunasDisponibles.map((c) => (
-                <option key={c} value={c}>{c}</option>
-              ))}
+              {comunasDisponibles.map(c => <option key={c} value={c}>{c}</option>)}
             </select>
-            {errores.comuna && <span style={{ color: "red" }}>{errores.comuna}</span>}
+            {errores.comuna && <span className="error">{errores.comuna}</span>}
 
-            <input type="date" name="fechaNacimiento" value={usuario.fechaNacimiento} onChange={handleChange}
-              style={{ padding: "12px", fontSize: "16px", borderRadius: "8px", border: "1px solid #ccc" }} />
+            <input type="date" name="fechaNacimiento" value={usuario.fechaNacimiento} onChange={handleChange} />
 
-            <button
-              type="submit"
-              style={{
-                padding: "14px",
-                fontSize: "16px",
-                borderRadius: "25px",
-                border: "none",
-                backgroundColor: "#4CAF50",
-                color: "white",
-                cursor: "pointer",
-                transition: "all 0.3s ease",
-              }}
-              onMouseOver={(e) => (e.target.style.backgroundColor = "#45a049")}
-              onMouseOut={(e) => (e.target.style.backgroundColor = "#4CAF50")}
-            >
-              Registrarse
-            </button>
+            <button type="submit">Registrarse</button>
           </form>
         </div>
       </div>
-
       <Footer />
     </div>
   );
