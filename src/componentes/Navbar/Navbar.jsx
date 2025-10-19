@@ -75,7 +75,7 @@ export function Navbar() {
             {usuario?.rol !== "ADMIN" && (
               <>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/productos">Nuestros Productos</Link>
+                  <Link className="nav-link" to="/nuestros-productos">Nuestros Productos</Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/blogs">Blogs</Link>

@@ -16,6 +16,7 @@ import { Inventario } from './pages/Inventario/Inventario';
 import { GestionUsuarios } from "./pages/GestionUsuarios/GestionUsuarios";
 import { CrearUsuario } from './componentes/Usuarios/CrearUsuario';
 import { EditarUsuario } from './componentes/Usuarios/EditarUsuario';
+import { NuestrosProductos } from './pages/NuestrosProductos/NuestrosProductos';
 
 function App() {
   return (
@@ -23,6 +24,8 @@ function App() {
       <Routes>
         {/* 🏠 Páginas principales */}
         <Route path="/" element={<Home />} />
+        <Route path="/nuestros-productos" element={<NuestrosProductos />} />
+
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/nosotros" element={<Nosotros />} />
         <Route path="/login" element={<Login />} />
