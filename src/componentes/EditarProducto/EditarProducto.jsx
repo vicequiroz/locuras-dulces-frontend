@@ -137,7 +137,7 @@ export function EditarProducto() {
 
       setSuccess(true);
       setTimeout(() => {
-        navigate('/productos');
+        navigate('/inventario');
       }, 1500);
 
     } catch (err) {
@@ -148,7 +148,7 @@ export function EditarProducto() {
   };
 
   const handleVolver = () => {
-    navigate('/productos');
+    navigate('/inventario');
   };
 
   if (loading) {

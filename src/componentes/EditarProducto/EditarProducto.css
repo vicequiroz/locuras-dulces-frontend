@@ -1,41 +1,54 @@
-
 .editar-producto-container {
   background: radial-gradient(circle, #fce4ec 0%, #fabbf2 100%);
-  min-height: 100vh;
-  padding: 60px 20px 40px;
+  min-height: calc(100vh - 60px); /* resta altura del footer si quieres */
+  padding: 60px 20px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .editar-card-container {
-  margin-top: 80px; /* separa del navbar */
+  margin-top: 40px;
   width: 100%;
   max-width: 600px;
+  flex: 1; /* hace que crezca y ocupe espacio disponible */
+  display: flex;
+  flex-direction: column;
 }
 
 .editar-card-header {
-  background-color: #d81b60; /* o el color que prefieras */
+  background-color: #d81b60; /* color principal */
   color: white;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
+  font-size: 1.2rem; /* título un poco más grande */
+  padding: 15px 20px;
 }
 
 .editar-card .form-control {
   background-color: #fff; /* campos blancos */
   border: 1px solid #ccc;
   border-radius: 6px;
+  font-size: 1.1rem; /* aumenta tamaño de texto */
+  padding: 10px; /* aumenta altura del campo */
+}
+
+.editar-card textarea.form-control {
+  min-height: 80px; /* campo de texto más grande */
 }
 
 .editar-card .input-group-text {
   background-color: #f8bbd0;
   border: none;
   font-weight: bold;
+  font-size: 1.1rem;
 }
 
 .editar-card .btn-primary {
   background-color: #d81b60;
   border: none;
+  font-size: 1.1rem; /* botones más grandes */
+  padding: 10px 15px;
 }
 
 .editar-card .btn-primary:hover {
@@ -48,4 +61,12 @@
   background-color: #ccc;
   border: none;
   color: #333;
+  font-size: 1.1rem;
+  padding: 10px 15px;
 }
+
+label.form-label {
+  font-size: 1.1rem; /* etiquetas más grandes */
+  font-weight: 500;
+}
+
