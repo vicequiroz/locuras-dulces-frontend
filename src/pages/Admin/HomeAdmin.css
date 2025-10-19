@@ -7,13 +7,14 @@
 
 /* Sidebar lateral */
 .sidebar {
-  width: 220px;
+  width: 400px;
   background-color: #f29db1;
   padding: 30px 20px;
   color: white;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
+  font-size: 20px;
 }
 
 .sidebar h2 {
@@ -26,7 +27,7 @@
   color: white;
   text-decoration: none;
   padding: 12px;
-  border-radius: 6px;
+  border-radius: 10px;
   text-align: center;
   transition: 0.3s;
 }
@@ -39,7 +40,18 @@
 .main-content {
   flex: 1;
   background-color: #fff;
-  padding: 30px;
+  padding: 50px;
   border-radius: 0 10px 10px 0;
   box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+}
+
+.main-content h1 {
+  font-size: 32px; /* título principal más grande */
+  margin-bottom: 20px;
+}
+
+.main-content p {
+  font-size: 20px; 
+  line-height: 1.6; 
+  margin-bottom: 15px;
 }

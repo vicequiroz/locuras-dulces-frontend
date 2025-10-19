@@ -1,0 +1,98 @@
+/* Contenedor principal */
+.contacto-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Tarjeta del formulario */
+.contacto-card {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+/* Cabecera de la tarjeta */
+.contacto-card .card-header {
+  background-color: rgb(233, 117, 161);
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 15px;
+}
+
+/* Inputs y select */
+.contacto-card .form-control,
+.contacto-card .form-select {
+  padding: 12px 15px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: all 0.3s ease;
+}
+
+.contacto-card .form-control:focus,
+.contacto-card .form-select:focus {
+  border-color: rgb(39, 195, 177);
+  box-shadow: 0 0 5px rgb(43, 220, 187);
+  outline: none;
+}
+
+/* Checkbox */
+.contacto-card .form-check-label {
+  font-size: 0.95rem;
+}
+
+/* Botones */
+.contacto-card .btn-primary {
+  background-color: #c327a1ff;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 25px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.contacto-card .btn-primary:hover {
+  background-color: #a01c88;
+}
+
+.contacto-card .btn-outline-secondary {
+  border-radius: 25px;
+  padding: 10px 25px;
+  font-size: 1rem;
+}
+
+/* Alertas */
+.contacto-card .alert {
+  font-size: 0.95rem;
+  text-align: center;
+  border-radius: 10px;
+}
+
+/* Validación */
+.is-invalid {
+  border-color: #dc3545 !important;
+}
+
+.invalid-feedback {
+  display: block;
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+
+/* Títulos */
+.contacto-container h2 {
+  font-weight: bold;
+  font-size: 2rem;
+  color: #333;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .contacto-card {
+    padding: 15px;
+  }
+}

@@ -17,6 +17,7 @@ import { GestionUsuarios } from "./pages/GestionUsuarios/GestionUsuarios";
 import { CrearUsuario } from './componentes/Usuarios/CrearUsuario';
 import { EditarUsuario } from './componentes/Usuarios/EditarUsuario';
 import { NuestrosProductos } from './pages/NuestrosProductos/NuestrosProductos';
+import { Contacto } from "./componentes/Contacto/Contacto";
 
 function App() {
   return (
@@ -25,9 +26,9 @@ function App() {
         {/* 🏠 Páginas principales */}
         <Route path="/" element={<Home />} />
         <Route path="/nuestros-productos" element={<NuestrosProductos />} />
-
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/nosotros" element={<Nosotros />} />
+        <Route path="/contacto" element={<Contacto />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />} />
 
