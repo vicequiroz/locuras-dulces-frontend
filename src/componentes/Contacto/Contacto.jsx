@@ -74,7 +74,10 @@ export function Contacto() {
     e.preventDefault();
     setAlerta("");
 
-    if (!validarFormulario()) return;
+    if (!validarFormulario()) {
+    setAlerta("Por favor completa todos los campos obligatorios correctamente.");
+    return;
+    }
 
     try {
       const response = await fetch("http://localhost:8080/api/contacto", {
