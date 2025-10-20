@@ -60,6 +60,26 @@ export function Productos() {
     }
   };
 
+  const handleEliminar = async (id, nombre) => {
+    if (window.confirm(`¿Deseas eliminar definitivamente el producto "${nombre}"?`)) {
+      try {
+        const response = await fetch(`http://localhost:8080/api/productos/${id}`, {
+          method: 'DELETE'
+        });
+
+        if (response.ok) {
+          alert(`El producto "${nombre}" fue eliminado correctamente`);
+          cargarProductos();
+        } else {
+          alert("Error al eliminar el producto");
+        }
+      } catch (error) {
+        console.error("Error al eliminar producto:", error);
+        alert("Error al eliminar el producto");
+      }
+    }
+  };
+
   const productosFiltrados = productos.filter(p => {
     const coincideNombre = p.nombre.toLowerCase().includes(busqueda.toLowerCase());
     const coincideCategoria = categoriaFiltro ? p.categoria?.id === parseInt(categoriaFiltro) : true;
@@ -113,6 +133,7 @@ export function Productos() {
                 <th>Categoría</th>
                 <th>Editar</th>
                 <th>Estado</th>
+                <th>Eliminar</th>
               </tr>
             </thead>
             <tbody>
@@ -159,6 +180,14 @@ export function Productos() {
                     ) : (
                       <span className="badge bg-secondary">Desactivado</span>
                     )}
+                  </td>
+                  <td>
+                    <button
+                      className="btn btn-sm btn-outline-danger"
+                      onClick={() => handleEliminar(prod.id, prod.nombre)}
+                    >
+                      🗑️ Eliminar
+                    </button>
                   </td>
                 </tr>
               ))}
