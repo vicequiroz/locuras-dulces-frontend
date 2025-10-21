@@ -1,3 +1,10 @@
+**Aplicación Frontend con React, CSS, JavaScript y JSON Server
+Asignatura: Desarrollo Fullstack 2
+Sección: 003V
+Profesora: Viviana Poblete López
+Integrantes: Paula Rojas Oyarzun – Vicente Quiroz Gómez**
+
+
 # 🍬 Locuras Dulces
 
 **Locuras Dulces** es una tienda virtual dedicada a la venta de productos de confitería, chocolates y snacks.  
