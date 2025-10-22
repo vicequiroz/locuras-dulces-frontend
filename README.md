@@ -47,24 +47,21 @@ El desarrollo sigue buenas prácticas de arquitectura, seguridad y validaciones 
 
 Ejecuta estos comandos en la terminal para descargar ambas partes del proyecto:
 
-```bash
 # Clonar rama Backend
 git clone -b Backend https://github.com/Paula-roja/Locuras_Dulces.git Locuras_Backend
 
 # Clonar rama Frontend
 git clone -b Frontend_Locuras_Dulces https://github.com/Paula-roja/Locuras_Dulces.git Locuras_Frontend
 
+
 ## 🧱 Configuración de Base de Datos MySQL
-Para que el backend funcione correctamente, primero debes crear la base de datos en **MySQL Workbench** o desde consola.
+Para que el backend funcione correctamente, primero debes crear la base de datos en **MySQL Workbench** llamada bd_locurasdulces o desde consola con el siguiente comando:
 
-
-```markdown
-## 🧱 Base de Datos MySQL
-
-```sql
 CREATE DATABASE bd_locurasdulces;
 
-USE bd_locurasdulces;
+## 🧱 Base de Datos MySQL, luego poblar las tablas con los siguientes scripts
+
+🔹 Para la tabla Categoria Insertar:
 
 INSERT INTO categoria (nombre) VALUES
 ('Snacks y Sufles'),
@@ -72,21 +69,8 @@ INSERT INTO categoria (nombre) VALUES
 ('Dulces y Caramelos Tradicionales'),
 ('Chicles y Gomitas');
 
-
-###🔹 Comandos para backend
-cd Locuras_Backend
-./mvnw spring-boot:run
-
-###🔹 Comandos para frontend
-cd Locuras_Frontend
-npm install
-npm run dev
-
-/* 
-Para ingresar el usuario administrador a la base de datos, 
-debes ejecutar este INSERT para poder acceder por login 
+🔹 Para ingresar el usuario administrador a la base de datos, debes ejecutar este INSERT para poder acceder por login 
 con las credenciales: admin@locurasdulces.cl / admin123 
-*/
 
 INSERT INTO usuario (nombre, correo, contrasena, rol, activo, fecha_registro)
 VALUES (
@@ -97,6 +81,18 @@ VALUES (
     1,
     NOW()
 );
+
+
+###🔹 Comandos para la ejecución del backend 
+cd Locuras_Backend
+./mvnw spring-boot:run
+
+###🔹 Comandos para la ejecucción del frontend
+cd Locuras_Frontend
+npm install
+npm run dev
+
+
 
 
 
