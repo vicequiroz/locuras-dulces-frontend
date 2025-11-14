@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Navbar } from "../../componentes/Navbar/Navbar";
 import { Footer } from "../../componentes/Footer/Footer";
+import { EstadisticasDashboard } from "../../componentes/EstadisticasDashboard/EstadisticasDashboard";
 import "./HomeAdmin.css";
 
 export function HomeAdmin() {
@@ -51,6 +52,9 @@ export function HomeAdmin() {
             Crea, edita y desactiva usuarios, administra el inventario y
             destaca productos en tu tienda.
           </p>
+
+          {/* Estadísticas del sistema */}
+          <EstadisticasDashboard />
         </div>
       </div>
       <Footer />
