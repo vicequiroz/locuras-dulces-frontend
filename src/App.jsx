@@ -7,6 +7,8 @@ import { Blogs } from './pages/Blogs/Blogs';
 import { Nosotros } from './pages/Nosotros/Nosotros';
 import { Login } from './pages/Login/Login';
 import { Registro } from './pages/Registro/Registro';
+import { ConfirmacionCompra } from "./pages/ConfirmacionCompra/ConfirmacionCompra";
+
 
 // 🧩 Componentes de gestión
 import { HomeAdmin } from "./pages/Admin/HomeAdmin";
@@ -18,6 +20,10 @@ import { CrearUsuario } from './componentes/Usuarios/CrearUsuario';
 import { EditarUsuario } from './componentes/Usuarios/EditarUsuario';
 import { NuestrosProductos } from './pages/NuestrosProductos/NuestrosProductos';
 import { Contacto } from "./componentes/Contacto/Contacto";
+import { DetalleProducto } from './pages/DetalleProducto/DetalleProducto';
+import { CarritoPage } from './pages/Carrito/CarritoPage';
+import { BoletaPage } from './pages/Boleta/BoletaPage';
+import { ComprasAdmin } from './pages/Admin/ComprasAdmin';
 
 function App() {
   return (
@@ -31,6 +37,14 @@ function App() {
         <Route path="/contacto" element={<Contacto />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />} />
+        <Route path="/confirmacion" element={<ConfirmacionCompra />} />
+        <Route path="/producto/:id" element={<DetalleProducto />} />
+        <Route path="/carrito" element={<CarritoPage />} />
+        <Route path="/confirmacion" element={<ConfirmacionCompra />} />
+        <Route path="/mis-compras" element={<BoletaPage />} />
+  
+
+
 
         {/* 🛠️ Módulos administrativos */}
         <Route path="/home-admin" element={<HomeAdmin />} />
@@ -40,6 +54,7 @@ function App() {
         <Route path="/gestion-usuarios" element={<GestionUsuarios />} />
         <Route path="/crear-usuario" element={<CrearUsuario />} />
         <Route path="/editar-usuario/:id" element={<EditarUsuario />} />
+        <Route path="/compras-admin" element={<ComprasAdmin />} />
       </Routes>
     </Router>
   );
