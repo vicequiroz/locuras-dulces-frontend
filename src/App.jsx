@@ -7,7 +7,7 @@ import { Blogs } from './pages/Blogs/Blogs';
 import { Nosotros } from './pages/Nosotros/Nosotros';
 import { Login } from './pages/Login/Login';
 import { Registro } from './pages/Registro/Registro';
-import { ConfirmacionCompra } from "./pages/ConfirmacionCompra/ConfirmacionCompra";
+import { ConfirmacionCompra } from "./componentes/ConfirmacionCompra/ConfirmacionCompra";
 
 
 // 🧩 Componentes de gestión
