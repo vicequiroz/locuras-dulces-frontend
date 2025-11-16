@@ -13,20 +13,21 @@ export const BoletaPage = () => {
 
   return (
     <div className="container mt-5">
-      <h2>🧾 Historial de Compras</h2>
+      <h2 className="text-center mb-4">🧾 Historial de Compras</h2>
+
       {boletas.length === 0 ? (
-        <p>No tienes compras registradas.</p>
+        <p className="text-center">No tienes compras registradas.</p>
       ) : (
         boletas.map(boleta => (
-          <div key={boleta.id_boleta} className="card mb-3">
+          <div key={boleta.id_boleta} className="card mb-3 shadow-sm">
             <div className="card-body">
-              <h5>Boleta #{boleta.id_boleta}</h5>
-              <p>Fecha: {boleta.fecha}</p>
-              <p>Total: ${boleta.total}</p>
-              <p>IVA: ${boleta.iva}</p>
-              <p>Medio de pago: {boleta.medioPago}</p>
+              <h5 className="card-title">Boleta #{boleta.id_boleta}</h5>
+              <p className="mb-1">📅 Fecha: {boleta.fecha}</p>
+              <p className="mb-1">💳 Medio de pago: {boleta.medioPago}</p>
+              <p className="mb-1">🧾 IVA: ${boleta.iva.toLocaleString("es-CL")}</p>
+              <p className="mb-1 fw-bold">💰 Total: ${boleta.total.toLocaleString("es-CL")}</p>
               <button
-                className="btn btn-outline-primary"
+                className="btn btn-outline-primary mt-2"
                 onClick={() => window.location.href = `/boleta/${boleta.id_boleta}`}
               >
                 Ver detalle

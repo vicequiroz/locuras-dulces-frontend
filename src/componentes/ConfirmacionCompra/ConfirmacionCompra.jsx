@@ -10,7 +10,7 @@ export const ConfirmacionCompra = () => {
   const [error, setError] = useState(false);
 
   const generarBoleta = async () => {
-    setError(false); // resetear error si se reintenta
+    setError(false);
 
     const detalles = carrito.map(p => ({
       producto: { id: p.id_producto },
@@ -38,20 +38,25 @@ export const ConfirmacionCompra = () => {
     }
   };
 
+  const total = carrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
+
   return (
     <div className="container mt-5">
       {!boletaGenerada && !error && (
         <>
           <h2>Confirmación de Compra</h2>
-          <p>Total a pagar: ${carrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0)}</p>
-          <button className="btn btn-success" onClick={generarBoleta}>
+          <p>Total a pagar: <strong>${total.toLocaleString("es-CL")}</strong></p>
+          <button
+            className="btn btn-success"
+            onClick={generarBoleta}
+            disabled={carrito.length === 0}
+          >
             Confirmar y generar boleta
           </button>
         </>
       )}
 
       {boletaGenerada && <BoletaResumen boleta={boletaGenerada} />}
-
       {error && <CompraFallida onRetry={generarBoleta} />}
     </div>
   );

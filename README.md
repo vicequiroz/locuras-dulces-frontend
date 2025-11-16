@@ -92,7 +92,8 @@ cd Locuras_Frontend
 npm install
 npm run dev
 
-
+###🔹 Comandos para la ejecucción de las estadisticas
+npm install chart.js react-chartjs-2
 
 
 

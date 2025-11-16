@@ -1,20 +1,45 @@
-import React from "react";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-export const BoletaResumen = ({ boleta }) => {
+export const BoletaDetalle = () => {
+  const { id } = useParams();
+  const [boleta, setBoleta] = useState(null);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/api/boletas/${id}`)
+      .then(res => {
+        if (!res.ok) throw new Error("Boleta no encontrada");
+        return res.json();
+      })
+      .then(data => setBoleta(data))
+      .catch(err => {
+        console.error(err);
+        setError(true);
+      });
+  }, [id]);
+
+  if (error) {
+    return <h2 className="text-center mt-5 text-danger">❌ Boleta no encontrada</h2>;
+  }
+
+  if (!boleta) {
+    return <h2 className="text-center mt-5">Cargando boleta...</h2>;
+  }
+
   const { id_boleta, fecha, total, totalAfecto, iva, medioPago, cliente, detalles } = boleta;
 
   return (
     <div className="container mt-5">
-      <h2 className="text-success">✅ Compra realizada con éxito</h2>
-      <p>Boleta N° <strong>{id_boleta}</strong></p>
+      <h2 className="text-success">🧾 Detalle de Boleta #{id_boleta}</h2>
       <p>Fecha: {fecha}</p>
       <p>Código orden: ORDER{id_boleta}</p>
 
-      <h4 className="mt-4">👤 Información del cliente</h4>
+      <h4 className="mt-4">👤 Cliente</h4>
       <ul>
         <li>Nombre: {cliente?.nombre}</li>
         <li>Apellido(s): {cliente?.apellido}</li>
-        <li>Correo electrónico: {cliente?.email}</li>
+        <li>Email: {cliente?.email}</li>
       </ul>
 
       <h4 className="mt-4">📦 Productos comprados</h4>
@@ -56,8 +81,8 @@ export const BoletaResumen = ({ boleta }) => {
         <li>Medio de pago: {medioPago}</li>
       </ul>
 
-      <button className="btn btn-primary mt-3" onClick={() => window.location.href = "/mis-compras"}>
-        Ver historial de compras
+      <button className="btn btn-outline-secondary mt-3" onClick={() => window.history.back()}>
+        ← Volver al historial
       </button>
     </div>
   );
