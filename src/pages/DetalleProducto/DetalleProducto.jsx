@@ -18,7 +18,7 @@ export const DetalleProducto = () => {
   }, [id]);
 
   const handleAgregar = () => {
-    agregarAlCarrito(producto, cantidad);
+    agregarAlCarrito({ ...producto, id_producto: producto.id }, cantidad);
     const total = producto.precio * cantidad;
     setConfirmacion(`${cantidad} unidad(es) de ${producto.nombre} agregadas al carrito. Total: $${total.toLocaleString("es-CL")}`);
     setTimeout(() => setConfirmacion(""), 3000);
