@@ -8,8 +8,10 @@ export const DetalleProducto = () => {
   const [producto, setProducto] = useState(null);
   const [cantidad, setCantidad] = useState(1);
   const [confirmacion, setConfirmacion] = useState("");
-  const { agregarAlCarrito } = useContext(CarritoContext);
+  const [alertaStock, setAlertaStock] = useState("");
+  const { carrito, agregarAlCarrito } = useContext(CarritoContext);
 
+  // Cargar producto
   useEffect(() => {
     fetch(`http://localhost:8080/api/productos/${id}`)
       .then(res => res.json())
@@ -17,14 +19,37 @@ export const DetalleProducto = () => {
       .catch(err => console.error("Producto no encontrado", err));
   }, [id]);
 
+  // Derivados del producto y carrito (si producto aún no está, usamos valores seguros)
+  const enCarrito = producto ? carrito.find(p => p.id_producto === producto.id) : null;
+  const cantidadEnCarrito = enCarrito?.cantidad || 0;
+  const stockDisponible = producto ? producto.stock - cantidadEnCarrito : 0;
+
+  // Alerta si el stock es bajo
+  useEffect(() => {
+    if (stockDisponible <= 5 && stockDisponible > 0) {
+      setAlertaStock(`⚠️ Quedan solo ${stockDisponible} unidad(es) disponibles.`);
+    } else {
+      setAlertaStock("");
+    }
+  }, [stockDisponible]);
+
   const handleAgregar = () => {
+    if (!producto) return;
+
+    if (cantidad > stockDisponible) {
+      setConfirmacion(`Solo quedan ${stockDisponible} unidad(es) disponibles. Ajusta la cantidad antes de agregar.`);
+      return;
+    }
+
     agregarAlCarrito({ ...producto, id_producto: producto.id }, cantidad);
     const total = producto.precio * cantidad;
     setConfirmacion(`${cantidad} unidad(es) de ${producto.nombre} agregadas al carrito. Total: $${total.toLocaleString("es-CL")}`);
     setTimeout(() => setConfirmacion(""), 3000);
   };
 
-  if (!producto) return <h2 className="mt-5 text-center">Producto no encontrado 😢</h2>;
+  if (!producto) {
+    return <h2 className="mt-5 text-center">Producto no encontrado 😢</h2>;
+  }
 
   return (
     <div className="container mt-5">
@@ -42,18 +67,26 @@ export const DetalleProducto = () => {
           <p className="mb-3">{producto.descripcion}</p>
           <h4 className="mb-4 text-success">${producto.precio.toLocaleString("es-CL")}</h4>
 
+          <p className="text-muted">Stock disponible: {stockDisponible}</p>
+          {cantidadEnCarrito > 0 && (
+            <p className="text-muted">Ya tienes {cantidadEnCarrito} unidad(es) en el carrito.</p>
+          )}
+          {alertaStock && (
+            <div className="alert alert-warning py-2">{alertaStock}</div>
+          )}
+
           <FormularioCantidad
             cantidad={cantidad}
             setCantidad={setCantidad}
-            stock={producto.stock}
+            stock={stockDisponible}
           />
 
           <button
             className="btn btn-success mt-3"
             onClick={handleAgregar}
-            disabled={producto.stock === 0}
+            disabled={stockDisponible === 0}
           >
-            {producto.stock === 0 ? "Sin stock disponible" : "Agregar al carrito"}
+            {stockDisponible === 0 ? "Sin stock disponible" : "Agregar al carrito"}
           </button>
 
           {confirmacion && (
