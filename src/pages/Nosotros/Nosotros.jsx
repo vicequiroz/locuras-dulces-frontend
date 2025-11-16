@@ -1,11 +1,13 @@
 import React from "react";
 import { Navbar } from "../../componentes/Navbar/Navbar";
+import { BotonesSesion } from "../../componentes/BotonesSesion/BotonesSesion";
 import { Footer } from "../../componentes/Footer/Footer";
 
 export function Nosotros() {
   return (
     <>
       <Navbar />
+      <BotonesSesion />
 
       <div className="container mt-5">
         <h2 className="text-center mb-5 fw-bold display-5">¡Quiénes Somos!</h2>

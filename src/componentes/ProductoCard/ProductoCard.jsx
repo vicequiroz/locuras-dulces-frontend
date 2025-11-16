@@ -6,15 +6,21 @@ export const ProductoCard = ({ producto }) => {
   const navigate = useNavigate();
   const { agregarAlCarrito } = useContext(CarritoContext);
   const [agregado, setAgregado] = useState(false);
+  const [mensaje, setMensaje] = useState("");
 
   const verDetalle = () => {
     navigate(`/producto/${producto.id}`);
   };
 
   const handleAgregar = () => {
-    agregarAlCarrito(producto, 1);
+    // Aseguramos que el producto tenga id_producto para el contexto
+    agregarAlCarrito({ ...producto, id_producto: producto.id }, 1);
     setAgregado(true);
-    setTimeout(() => setAgregado(false), 2000);
+    setMensaje(`1 unidad de ${producto.nombre} por $${producto.precio.toLocaleString()}`);
+    setTimeout(() => {
+      setAgregado(false);
+      setMensaje("");
+    }, 2000);
   };
 
   return (
@@ -36,6 +42,11 @@ export const ProductoCard = ({ producto }) => {
         >
           {agregado ? "✔ Agregado" : "Agregar"}
         </button>
+        {mensaje && (
+          <div className="mt-2 text-success small fw-bold">
+            {mensaje}
+          </div>
+        )}
       </div>
     </div>
   );
