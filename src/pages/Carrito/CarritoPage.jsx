@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { CarritoContext } from "../context/CarritoContext";
+import { CarritoContext } from "../../context/CarritoContext";
 import { useNavigate } from "react-router-dom";
-import { TablaCarrito } from "../componentes/TablaCarrito";
+import { TablaCarrito } from "../../componentes/TablaCarrito/TablaCarrito";
 
 export const CarritoPage = () => {
   const { carrito, eliminarDelCarrito, vaciarCarrito } = useContext(CarritoContext);

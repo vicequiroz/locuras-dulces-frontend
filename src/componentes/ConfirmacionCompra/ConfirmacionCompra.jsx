@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
-import { CarritoContext } from "../context/CarritoContext";
-import { BoletaResumen } from "../componentes/BoletaResumen/BoletaResumen";
-import { CompraFallida } from "../componentes/ConfirmacionCompra/CompraFallida";
+import { CarritoContext } from "../../context/CarritoContext";
+import { BoletaResumen } from "../../componentes/BoletaResumen/BoletaResumen";
+import { CompraFallida } from "../../componentes/ConfirmacionCompra/CompraFallida";
 
 export const ConfirmacionCompra = () => {
   const { carrito, vaciarCarrito } = useContext(CarritoContext);

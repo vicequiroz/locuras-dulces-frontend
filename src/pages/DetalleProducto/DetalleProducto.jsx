@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
-import { CarritoContext } from "../context/CarritoContext";
-import { FormularioCantidad } from "../componentes/FormularioCantidad/FormularioCantidad";
+import { CarritoContext } from "../../context/CarritoContext";
+import { FormularioCantidad } from "../../componentes/FormularioCantidad/FormularioCantidad";
 
 export const DetalleProducto = () => {
   const { id } = useParams();
