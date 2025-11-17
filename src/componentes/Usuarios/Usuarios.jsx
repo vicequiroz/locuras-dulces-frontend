@@ -26,23 +26,22 @@ export function Usuarios() {
     cargarUsuarios();
   }, []);
 
-  const handleDesactivar = (id, nombre) => {
-    if (window.confirm(`¿Desactivar usuario "${nombre}"?`)) {
-      fetch(`http://localhost:8080/api/usuarios/${id}/desactivar`, {
-        method: 'PATCH'
-      })
-        .then(res => {
-          if (!res.ok) throw new Error('Error al desactivar');
-          return res.json();
-        })
-        .then(() => {
-          alert('Usuario desactivado');
-          cargarUsuarios();
-        })
-        .catch(err => {
-          console.error('Error:', err);
-          alert('No se pudo desactivar');
-        });
+  const cambiarEstado = async (id, accion, nombre) => {
+    const confirmacion = window.confirm(`¿Seguro que deseas ${accion} al usuario "${nombre}"?`);
+    if (!confirmacion) return;
+
+    try {
+      const metodo = accion === "eliminar" ? "DELETE" : "PATCH";
+      const url = `http://localhost:8080/api/usuarios/${id}${accion === "eliminar" ? "" : `/${accion}`}`;
+
+      const res = await fetch(url, { method: metodo });
+      if (!res.ok) throw new Error(`Error al ${accion}`);
+
+      alert(`Usuario ${accion === "eliminar" ? "eliminado" : accion + "do"} correctamente`);
+      cargarUsuarios();
+    } catch (err) {
+      console.error('Error:', err);
+      alert(`No se pudo ${accion} al usuario`);
     }
   };
 
@@ -56,7 +55,12 @@ export function Usuarios() {
       <h3 className="text-center mb-4">👥 Gestión de Usuarios</h3>
 
       <div className="row mb-3">
-        <div className="col-md-6">
+        <div className="col-md-4">
+          <Link className="btn btn-outline-secondary" to="/home-admin">
+            ⬅ Volver al menú admin
+          </Link>
+        </div>
+        <div className="col-md-4">
           <input
             type="text"
             className="form-control"
@@ -65,7 +69,7 @@ export function Usuarios() {
             onChange={(e) => setBusqueda(e.target.value)}
           />
         </div>
-        <div className="col-md-6 text-end">
+        <div className="col-md-4 text-end">
           <Link className="btn btn-outline-success" to="/crear-usuario">
             ➕ Crear usuario
           </Link>
@@ -73,9 +77,9 @@ export function Usuarios() {
       </div>
 
       <div className="table-responsive">
-        <table className="table table-bordered table-hover">
+        <table className="table table-bordered table-hover w-100">
           <thead className="table-light">
-            <tr>
+            <tr style={{ whiteSpace: 'nowrap' }}>
               <th>ID</th>
               <th>Nombre</th>
               <th>Correo</th>
@@ -93,7 +97,7 @@ export function Usuarios() {
           </thead>
           <tbody>
             {usuariosFiltrados.map(u => (
-              <tr key={u.id} style={{ opacity: u.activo ? 1 : 0.5 }}>
+              <tr key={u.id} style={{ opacity: u.activo ? 1 : 0.5, whiteSpace: 'nowrap' }}>
                 <td>{u.id}</td>
                 <td>{u.nombre}</td>
                 <td>{u.correo}</td>
@@ -105,11 +109,9 @@ export function Usuarios() {
                 <td>{u.fechaRegistro?.slice(0, 10) || '—'}</td>
                 <td>{u.rol}</td>
                 <td>
-                  {u.activo ? (
-                    <span className="badge bg-success">Activo</span>
-                  ) : (
-                    <span className="badge bg-secondary">Inactivo</span>
-                  )}
+                  <span className={`badge ${u.activo ? "bg-success" : "bg-secondary"}`}>
+                    {u.activo ? "Activo" : "Inactivo"}
+                  </span>
                 </td>
                 <td>
                   {u.activo ? (
@@ -123,13 +125,22 @@ export function Usuarios() {
                   )}
                 </td>
                 <td>
-                  {u.activo ? (
-                    <button className="btn btn-sm btn-outline-danger" onClick={() => handleDesactivar(u.id, u.nombre)}>
-                      Desactivar
-                    </button>
-                  ) : (
-                    <span className="text-muted">—</span>
-                  )}
+                  <div className="d-grid gap-1">
+                    {u.activo ? (
+                      <button className="btn btn-sm btn-outline-danger" onClick={() => cambiarEstado(u.id, "desactivar", u.nombre)}>
+                        Desactivar
+                      </button>
+                    ) : (
+                      <>
+                        <button className="btn btn-sm btn-outline-success" onClick={() => cambiarEstado(u.id, "activar", u.nombre)}>
+                          Activar
+                        </button>
+                        <button className="btn btn-sm btn-outline-dark" onClick={() => cambiarEstado(u.id, "eliminar", u.nombre)}>
+                          Eliminar
+                        </button>
+                      </>
+                    )}
+                  </div>
                 </td>
               </tr>
             ))}

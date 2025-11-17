@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './Usuarios.css';
 
-
 export function EditarUsuario() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -83,6 +82,24 @@ export function EditarUsuario() {
     }
   };
 
+  const cambiarEstado = async (accion) => {
+    const confirmacion = window.confirm(`¿Seguro que deseas ${accion} este usuario?`);
+    if (!confirmacion) return;
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/usuarios/${usuarioId}/${accion}`, {
+        method: "PATCH"
+      });
+
+      if (!response.ok) throw new Error("Error al cambiar estado");
+
+      const actualizado = await response.json();
+      setUsuario(actualizado);
+    } catch (err) {
+      alert("Error: " + err.message);
+    }
+  };
+
   const handleVolver = () => {
     navigate('/gestion-usuarios');
   };
@@ -149,16 +166,28 @@ export function EditarUsuario() {
         <div className="col-md-4">
           <label className="form-label">Rol</label>
           <select name="rol" value={usuario.rol} onChange={handleChange} className="form-select">
-            <option value="USER">Cliente</option>
+            <option value="CLIENTE">Cliente</option>
             <option value="VENDEDOR">Vendedor</option>
-            <option value="ADMIN">Administrador</option>
+            <option value="SUPER-ADMIN">Administrador</option>
           </select>
         </div>
 
         <div className="col-md-4 d-flex align-items-center">
-          <div className="form-check mt-4">
-            <input className="form-check-input" type="checkbox" name="activo" checked={usuario.activo} onChange={handleChange} />
-            <label className="form-check-label">Usuario activo</label>
+          <div className="mt-4">
+            <span className={`badge ${usuario.activo ? "bg-success" : "bg-secondary"}`}>
+              {usuario.activo ? "Activo" : "Inactivo"}
+            </span>
+            <div className="mt-2">
+              {usuario.activo ? (
+                <button className="btn btn-warning btn-sm" onClick={() => cambiarEstado("desactivar")}>
+                  Desactivar
+                </button>
+              ) : (
+                <button className="btn btn-success btn-sm" onClick={() => cambiarEstado("activar")}>
+                  Activar
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
