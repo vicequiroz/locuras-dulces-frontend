@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "../../componentes/Navbar/Navbar";
 import { Footer } from "../../componentes/Footer/Footer";
-import "./login.css"; // <-- importar CSS
+import "./login.css";
 
 export function Login() {
   const navigate = useNavigate();
-  const [usuario, setUsuario] = useState({ correo: "", contrasena: "" });
+  const [usuario, setUsuario] = useState({ email: "", contrasena: "" });
   const [errores, setErrores] = useState({});
   const [errorGeneral, setErrorGeneral] = useState("");
 
@@ -19,7 +19,7 @@ export function Login() {
   const validarCampo = (name, value) => {
     let error = "";
     if (!value) error = "Este campo es obligatorio";
-    else if (name === "correo" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
+    else if (name === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
       error = "Formato de correo inválido";
     else if (name === "contrasena" && value.length < 6)
       error = "La contraseña debe tener al menos 6 caracteres";
@@ -81,13 +81,13 @@ export function Login() {
             <form onSubmit={handleSubmit}>
               <input
                 type="email"
-                name="correo"
+                name="email"
                 placeholder="Correo electrónico"
-                value={usuario.correo}
+                value={usuario.email}
                 onChange={handleChange}
-                className={errores.correo ? "error" : ""}
+                className={errores.email ? "error" : ""}
               />
-              {errores.correo && <span className="error-msg">{errores.correo}</span>}
+              {errores.email && <span className="error-msg">{errores.email}</span>}
 
               <input
                 type="password"

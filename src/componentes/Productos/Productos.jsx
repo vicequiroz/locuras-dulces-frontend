@@ -60,6 +60,26 @@ export function Productos() {
     }
   };
 
+  const handleActivar = (id, nombre) => {
+    if (window.confirm(`¿Deseas activar nuevamente el producto "${nombre}"?`)) {
+      fetch(`http://localhost:8080/api/productos/${id}/activar`, {
+        method: 'PATCH'
+      })
+        .then(response => {
+          if (!response.ok) throw new Error('Error al activar el producto');
+          return response.json();
+        })
+        .then(() => {
+          alert('Producto activado exitosamente');
+          cargarProductos();
+        })
+        .catch(error => {
+          console.error('Error al activar:', error);
+          alert('Error al activar el producto');
+        });
+    }
+  };
+
   const handleEliminar = async (id, nombre) => {
     if (window.confirm(`¿Deseas eliminar definitivamente el producto "${nombre}"?`)) {
       try {
@@ -90,8 +110,13 @@ export function Productos() {
     <div className="container mi-tabla mt-5">
       <h3 className="text-center mb-4 mt-5">🍬 Inventario Locuras Dulces 🍬</h3>
 
-      <div className="row mb-3">
-        <div className="col-md-6">
+      <div className="row mb-3 align-items-center">
+        <div className="col-md-3">
+          <Link className="btn btn-outline-secondary w-100" to="/home-admin">
+            ⬅ Volver al menú admin
+          </Link>
+        </div>
+        <div className="col-md-4">
           <input
             type="text"
             className="form-control"
@@ -100,7 +125,7 @@ export function Productos() {
             onChange={(e) => setBusqueda(e.target.value)}
           />
         </div>
-        <div className="col-md-4">
+        <div className="col-md-3">
           <select
             className="form-select"
             value={categoriaFiltro}
@@ -182,12 +207,28 @@ export function Productos() {
                     )}
                   </td>
                   <td>
-                    <button
-                      className="btn btn-sm btn-outline-danger"
-                      onClick={() => handleEliminar(prod.id, prod.nombre)}
-                    >
-                      🗑️ Eliminar
-                    </button>
+                    <div className="d-grid gap-1">
+                      {prod.activo ? (
+                        <button className="btn btn-sm btn-outline-secondary" disabled>
+                          🗑️ Eliminar
+                        </button>
+                      ) : (
+                        <>
+                          <button
+                            className="btn btn-sm btn-outline-success"
+                            onClick={() => handleActivar(prod.id, prod.nombre)}
+                          >
+                            Activar
+                          </button>
+                          <button
+                            className="btn btn-sm btn-outline-danger"
+                            onClick={() => handleEliminar(prod.id, prod.nombre)}
+                          >
+                            🗑️ Eliminar
+                          </button>
+                        </>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}

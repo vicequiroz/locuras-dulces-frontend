@@ -25,6 +25,7 @@ import { Contacto } from "./componentes/Contacto/Contacto";
 import { DetalleProducto } from './pages/DetalleProducto/DetalleProducto';
 import { CarritoPage } from './pages/Carrito/CarritoPage';
 import { BoletaPage } from './pages/Boleta/BoletaPage';
+import { FormularioCompra } from "./pages/FormularioCompra/FormularioCompra";
 import { BoletaDetalle } from './pages/Boleta/BoletaDetalle';
 import { ComprasAdmin } from './pages/Admin/ComprasAdmin';
 
@@ -44,6 +45,7 @@ function App() {
           <Route path="/confirmacion" element={<ConfirmacionCompra />} />
           <Route path="/producto/:id" element={<DetalleProducto />} />
           <Route path="/carrito" element={<CarritoPage />} />
+          <Route path="/formulario-compra" element={<FormularioCompra />} />
           <Route path="/mis-compras" element={<BoletaPage />} />
           <Route path="/boleta/:id" element={<BoletaDetalle />} />
 

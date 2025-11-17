@@ -1,6 +1,6 @@
 import React from "react";
 
-export const TablaCarrito = ({ carrito, eliminarDelCarrito }) => {
+export const TablaCarrito = ({ carrito, eliminarDelCarrito, actualizarCantidad }) => {
   const total = carrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
 
   return (
@@ -29,7 +29,16 @@ export const TablaCarrito = ({ carrito, eliminarDelCarrito }) => {
               </td>
               <td>{p.nombre}</td>
               <td>${p.precio.toLocaleString("es-CL")}</td>
-              <td>{p.cantidad}</td>
+              <td>
+                <input
+                  type="number"
+                  min="1"
+                  value={p.cantidad}
+                  onChange={(e) => actualizarCantidad(p.id_producto, parseInt(e.target.value))}
+                  className="form-control form-control-sm text-center"
+                  style={{ maxWidth: "80px", margin: "auto" }}
+                />
+              </td>
               <td>${(p.precio * p.cantidad).toLocaleString("es-CL")}</td>
               <td>
                 <button

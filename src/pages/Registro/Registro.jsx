@@ -7,84 +7,59 @@ import "./Registro.css";
 const regiones = [
   {
     nombre: "Región Metropolitana",
-    comunas: [
-      "Santiago", "Maipú", "La Florida", "Puente Alto", "Ñuñoa", "Providencia",
-      "Las Condes", "San Bernardo", "Pudahuel", "Recoleta", "Peñalolén", "Lo Barnechea",
-      "Macul", "La Reina", "Cerrillos", "El Bosque", "Estación Central", "La Cisterna",
-      "Lo Prado", "Pedro Aguirre Cerda", "Quilicura", "Renca", "San Joaquín", "San Miguel",
-      "San Ramón", "Vitacura", "Huechuraba", "Independencia", "Lo Espejo", "Conchalí"
-    ]
+    comunas: ["Santiago", "Maipú", "La Florida", "Puente Alto", "Ñuñoa", "Providencia", "Las Condes", "San Bernardo", "Pudahuel", "Recoleta", "Peñalolén", "Lo Barnechea", "Macul", "La Reina", "Cerrillos", "El Bosque", "Estación Central", "La Cisterna", "Lo Prado", "Pedro Aguirre Cerda", "Quilicura", "Renca", "San Joaquín", "San Miguel", "San Ramón", "Vitacura", "Huechuraba", "Independencia", "Lo Espejo", "Conchalí"]
   },
   {
     nombre: "Valparaíso",
-    comunas: [
-      "Valparaíso", "Viña del Mar", "Quilpué", "Villa Alemana", "San Antonio",
-      "Los Andes", "San Felipe", "La Calera", "Quillota", "Concón", "Limache", "Llay Llay"
-    ]
+    comunas: ["Valparaíso", "Viña del Mar", "Quilpué", "Villa Alemana", "San Antonio", "Los Andes", "San Felipe", "La Calera", "Quillota", "Concón", "Limache", "Llay Llay"]
   },
   {
     nombre: "Biobío",
-    comunas: [
-      "Concepción", "Chillán", "Los Ángeles", "Coronel", "Talcahuano", "San Pedro de la Paz",
-      "Hualpén", "Lota", "Penco", "Tomé", "Chiguayante", "Nacimiento", "Mulchén"
-    ]
+    comunas: ["Concepción", "Chillán", "Los Ángeles", "Coronel", "Talcahuano", "San Pedro de la Paz", "Hualpén", "Lota", "Penco", "Tomé", "Chiguayante", "Nacimiento", "Mulchén"]
   },
   {
     nombre: "Coquimbo",
-    comunas: [
-      "La Serena", "Coquimbo", "Ovalle", "Illapel", "Andacollo", "Vicuña", "Monte Patria"
-    ]
+    comunas: ["La Serena", "Coquimbo", "Ovalle", "Illapel", "Andacollo", "Vicuña", "Monte Patria"]
   },
   {
     nombre: "Araucanía",
-    comunas: [
-      "Temuco", "Padre Las Casas", "Angol", "Victoria", "Villarrica", "Pucón", "Lautaro"
-    ]
+    comunas: ["Temuco", "Padre Las Casas", "Angol", "Victoria", "Villarrica", "Pucón", "Lautaro"]
   },
   {
     nombre: "Los Lagos",
-    comunas: [
-      "Puerto Montt", "Osorno", "Castro", "Ancud", "Calbuco", "Quellón", "Frutillar"
-    ]
+    comunas: ["Puerto Montt", "Osorno", "Castro", "Ancud", "Calbuco", "Quellón", "Frutillar"]
   },
   {
     nombre: "Antofagasta",
-    comunas: [
-      "Antofagasta", "Calama", "Mejillones", "Tocopilla", "Taltal"
-    ]
+    comunas: ["Antofagasta", "Calama", "Mejillones", "Tocopilla", "Taltal"]
   },
   {
     nombre: "Atacama",
-    comunas: [
-      "Copiapó", "Vallenar", "Caldera", "Chañaral", "Diego de Almagro"
-    ]
+    comunas: ["Copiapó", "Vallenar", "Caldera", "Chañaral", "Diego de Almagro"]
   },
   {
     nombre: "O'Higgins",
-    comunas: [
-      "Rancagua", "San Fernando", "Santa Cruz", "Machalí", "Graneros", "Pichilemu"
-    ]
+    comunas: ["Rancagua", "San Fernando", "Santa Cruz", "Machalí", "Graneros", "Pichilemu"]
   },
   {
     nombre: "Magallanes",
-    comunas: [
-      "Punta Arenas", "Puerto Natales", "Porvenir", "Cabo de Hornos"
-    ]
+    comunas: ["Punta Arenas", "Puerto Natales", "Porvenir", "Cabo de Hornos"]
   }
 ];
-
 
 export function Registro() {
   const [usuario, setUsuario] = useState({
     nombre: "",
-    correo: "",
+    apellido: "",
+    email: "",
     contrasena: "",
     confirmarContrasena: "",
     telefono: "",
-    direccion: "",
+    calle: "",
+    numero: "",
     region: "",
     comuna: "",
-    fechaNacimiento: "",
+    fechaNacimiento: ""
   });
 
   const [comunasDisponibles, setComunasDisponibles] = useState([]);
@@ -112,7 +87,11 @@ export function Registro() {
         if (!value) error = "El nombre es obligatorio.";
         else if (value.length < 3) error = "Debe tener al menos 3 caracteres.";
         break;
-      case "correo":
+      case "apellido":
+        if (!value) error = "El apellido es obligatorio.";
+        else if (value.length < 3) error = "Debe tener al menos 3 caracteres.";
+        break;
+      case "email":
         if (!value) error = "El correo es obligatorio.";
         else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) error = "Formato inválido.";
         break;
@@ -126,6 +105,12 @@ export function Registro() {
         break;
       case "telefono":
         if (value && !/^\d{7,10}$/.test(value)) error = "Solo números (7-10 dígitos).";
+        break;
+      case "calle":
+        if (!value) error = "La calle es obligatoria.";
+        break;
+      case "numero":
+        if (!value) error = "El número es obligatorio.";
         break;
       case "region":
         if (!value) error = "Debe seleccionar una región.";
@@ -141,7 +126,7 @@ export function Registro() {
   };
 
   const validarFormulario = () => {
-    const campos = ["nombre","correo","contrasena","confirmarContrasena","region","comuna"];
+    const campos = ["nombre", "apellido", "email", "contrasena", "confirmarContrasena", "region", "comuna", "calle", "numero"];
     let valido = true;
     campos.forEach(campo => {
       validarCampo(campo, usuario[campo]);
@@ -157,11 +142,14 @@ export function Registro() {
       return;
     }
 
+    const payload = { ...usuario };
+    delete payload.confirmarContrasena;
+
     try {
       const response = await fetch("http://localhost:8080/api/usuarios", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(usuario),
+        body: JSON.stringify(payload),
       });
 
       if (response.ok) {
@@ -186,11 +174,14 @@ export function Registro() {
         <div className="registro-card">
           <h2>Registro de Usuario</h2>
           <form onSubmit={handleSubmit}>
-            <input type="text" name="nombre" placeholder="Nombre completo" value={usuario.nombre} onChange={handleChange} />
+            <input type="text" name="nombre" placeholder="Nombre" value={usuario.nombre} onChange={handleChange} />
             {errores.nombre && <span className="error">{errores.nombre}</span>}
 
-            <input type="email" name="correo" placeholder="Correo electrónico" value={usuario.correo} onChange={handleChange} />
-            {errores.correo && <span className="error">{errores.correo}</span>}
+            <input type="text" name="apellido" placeholder="Apellido" value={usuario.apellido} onChange={handleChange} />
+            {errores.apellido && <span className="error">{errores.apellido}</span>}
+
+            <input type="email" name="email" placeholder="Correo electrónico" value={usuario.email} onChange={handleChange} />
+            {errores.email && <span className="error">{errores.email}</span>}
 
             <input type="password" name="contrasena" placeholder="Contraseña" value={usuario.contrasena} onChange={handleChange} />
             {errores.contrasena && <span className="error">{errores.contrasena}</span>}
@@ -201,7 +192,11 @@ export function Registro() {
             <input type="tel" name="telefono" placeholder="Teléfono" value={usuario.telefono} onChange={handleChange} />
             {errores.telefono && <span className="error">{errores.telefono}</span>}
 
-            <input type="text" name="direccion" placeholder="Dirección" value={usuario.direccion} onChange={handleChange} />
+            <input type="text" name="calle" placeholder="Calle" value={usuario.calle} onChange={handleChange} />
+            {errores.calle && <span className="error">{errores.calle}</span>}
+
+            <input type="text" name="numero" placeholder="Número" value={usuario.numero} onChange={handleChange} />
+            {errores.numero && <span className="error">{errores.numero}</span>}
 
             <select name="region" value={usuario.region} onChange={handleChange}>
               <option value="">Seleccione una región</option>
