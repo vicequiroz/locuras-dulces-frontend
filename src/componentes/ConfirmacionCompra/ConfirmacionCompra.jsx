@@ -5,35 +5,55 @@ import { CompraFallida } from "../../componentes/ConfirmacionCompra/CompraFallid
 
 export const ConfirmacionCompra = () => {
   const { carrito, vaciarCarrito } = useContext(CarritoContext);
-  const usuario = JSON.parse(localStorage.getItem("usuarioActivo"));
   const [boletaGenerada, setBoletaGenerada] = useState(null);
   const [error, setError] = useState(false);
 
   const generarBoleta = async () => {
     setError(false);
 
-    const detalles = carrito.map(p => ({
-      producto: { id: p.id_producto },
+    // 📌 Tomar usuario desde localStorage
+    const usuarioActivo = JSON.parse(localStorage.getItem("usuarioActivo"));
+    const idUsuario =
+      usuarioActivo?.id ||
+      usuarioActivo?.id_usuario ||
+      usuarioActivo?.idUsuario;
+
+    if (!idUsuario) {
+      console.error("ID de usuario no encontrado", usuarioActivo);
+      setError(true);
+      return;
+    }
+
+    // 📌 Detalles que el backend espera
+    const detalles = carrito.map((p) => ({
+      idProducto: p.id_producto || p.id,
       cantidad: p.cantidad,
-      precio_unitario: p.precio
     }));
 
-    const medioPago = "Débito";
+    const boletaRequest = {
+      idUsuario,
+      medioPago: "Débito",
+      direccion: null,
+      detalles,
+    };
 
     try {
-      const res = await fetch(`http://localhost:8080/api/boletas?idUsuario=${usuario.id}&medioPago=${medioPago}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(detalles)
-      });
+      const res = await fetch(
+        "http://localhost:8080/api/boletas/generar",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(boletaRequest),
+        }
+      );
 
       if (!res.ok) throw new Error("Error al generar boleta");
 
       const boleta = await res.json();
       setBoletaGenerada(boleta);
       vaciarCarrito();
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error("Error generando boleta:", err);
       setError(true);
     }
   };
@@ -45,7 +65,10 @@ export const ConfirmacionCompra = () => {
       {!boletaGenerada && !error && (
         <>
           <h2>Confirmación de Compra</h2>
-          <p>Total a pagar: <strong>${total.toLocaleString("es-CL")}</strong></p>
+          <p>
+            Total a pagar:{" "}
+            <strong>${total.toLocaleString("es-CL")}</strong>
+          </p>
           <button
             className="btn btn-success"
             onClick={generarBoleta}

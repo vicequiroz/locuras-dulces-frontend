@@ -10,34 +10,48 @@ export function Login() {
   const [errores, setErrores] = useState({});
   const [errorGeneral, setErrorGeneral] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUsuario((prev) => ({ ...prev, [name]: value }));
-    validarCampo(name, value);
-  };
-
   const validarCampo = (name, value) => {
     let error = "";
-    if (!value) error = "Este campo es obligatorio";
-    else if (name === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
+
+    if (!value) {
+      error = "Este campo es obligatorio";
+    } else if (name === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
       error = "Formato de correo inválido";
-    else if (name === "contrasena" && value.length < 6)
+    } else if (name === "contrasena" && value.length < 6) {
       error = "La contraseña debe tener al menos 6 caracteres";
+    }
+
+    return error;
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setUsuario((prev) => ({ ...prev, [name]: value }));
+
+    // Validación en vivo
+    const error = validarCampo(name, value);
     setErrores((prev) => ({ ...prev, [name]: error }));
   };
 
   const validarFormulario = () => {
-    let valido = true;
-    Object.keys(usuario).forEach((campo) => {
-      validarCampo(campo, usuario[campo]);
-      if (!usuario[campo] || errores[campo]) valido = false;
+    let nuevosErrores = {};
+    let esValido = true;
+
+    Object.entries(usuario).forEach(([campo, valor]) => {
+      const error = validarCampo(campo, valor);
+      if (error) esValido = false;
+      nuevosErrores[campo] = error;
     });
-    return valido;
+
+    setErrores(nuevosErrores);
+    return esValido;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorGeneral("");
+
     if (!validarFormulario()) return;
 
     try {
@@ -53,8 +67,17 @@ export function Login() {
       }
 
       const data = await response.json();
-      localStorage.setItem("usuarioActivo", JSON.stringify(data));
 
+      // Guardar en localStorage
+      localStorage.setItem(
+        "usuarioActivo",
+        JSON.stringify({
+          ...data,
+          id: data.id,
+        })
+      );
+
+      // Redirección según rol
       if (data.rol?.toUpperCase() === "SUPER-ADMIN") {
         navigate("/home-admin", { state: { usuario: data } });
       } else {

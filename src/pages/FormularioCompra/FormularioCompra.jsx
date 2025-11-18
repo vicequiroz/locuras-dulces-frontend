@@ -1,52 +1,93 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useMemo } from "react";
 import { CarritoContext } from "../../context/CarritoContext";
+import { regiones } from "../../utils/regiones";
 import { useNavigate } from "react-router-dom";
 
 export const FormularioCompra = () => {
   const { carrito, vaciarCarrito } = useContext(CarritoContext);
-  const usuario = JSON.parse(localStorage.getItem("usuarioActivo")) || {};
+  const rawUsuario = JSON.parse(localStorage.getItem("usuarioActivo")) || {};
   const navigate = useNavigate();
 
+  // Normalizamos id del usuario (acepta id, id_usuario o idUsuario)
+  const usuario = useMemo(() => {
+    return {
+      ...rawUsuario,
+      idNormalized: rawUsuario?.id ?? rawUsuario?.id_usuario ?? rawUsuario?.idUsuario ?? null
+    };
+  }, [rawUsuario]);
+
   const [form, setForm] = useState({
-    nombre: usuario.nombre || "",
-    apellido: usuario.apellido || "",
-    email: usuario.email || "",
-    calle: "",
-    numero: "",
-    comuna: "",
-    region: "Región Metropolitana",
-    referencia: "",
+    nombre: rawUsuario?.nombre || "",
+    apellido: rawUsuario?.apellido || "",
+    email: rawUsuario?.email || "",
+    calle: rawUsuario?.calle || "",
+    numero: rawUsuario?.numero || "",
+    comuna: rawUsuario?.comuna || "",
+    region: rawUsuario?.region || "",
+    referencia: rawUsuario?.referencia || "",
     medioPago: "Débito"
   });
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm(prev => ({
+      ...prev,
+      [name]: value,
+      ...(name === "region" ? { comuna: "" } : {})
+    }));
+  };
+
+  const validateBeforeSend = () => {
+    if (!carrito || carrito.length === 0) {
+      alert("El carrito está vacío.");
+      return false;
+    }
+
+    // Tu backend requiere idUsuario. Si no hay -> forzamos login
+    if (!usuario.idNormalized) {
+      alert("Debes iniciar sesión para finalizar la compra. Serás redirigido al login.");
+      navigate("/login");
+      return false;
+    }
+
+    // Podrías añadir validaciones de dirección aquí si tu backend las exige
+    return true;
   };
 
   const handleConfirmarCompra = async () => {
-    const detalles = carrito.map(p => ({
-      producto: { id: p.id_producto },
-      cantidad: p.cantidad,
-      precio_unitario: p.precio
-    }));
+    if (!validateBeforeSend()) return;
+
+    // Mapeo robusto de detalles: aceptamos distintos nombres en carrito (id_producto, id, idProducto)
+    const detalles = carrito.map(p => {
+      const idProd = p?.id_producto ?? p?.id ?? p?.idProducto ?? null;
+      return {
+        idProducto: Number(idProd),
+        cantidad: Number(p.cantidad ?? 1)
+      };
+    });
+
+    // Comprueba que no haya idProducto null
+    const faltanIds = detalles.some(d => !d.idProducto);
+    if (faltanIds) {
+      console.error("Algún producto del carrito no tiene id válido:", carrito);
+      alert("Hay un producto en el carrito sin id. Revisa la consola.");
+      return;
+    }
 
     const payload = {
-      cliente: {
-        id: usuario.id,
-        nombre: form.nombre,
-        apellido: form.apellido,
-        email: form.email
-      },
-      direccion: {
-        calle: form.calle,
-        numero: form.numero,
-        comuna: form.comuna,
-        region: form.region,
-        referencia: form.referencia
-      },
+      idUsuario: usuario.idNormalized,
       medioPago: form.medioPago,
+      direccion: {
+        calle: form.calle || null,
+        numero: form.numero || null,
+        comuna: form.comuna || null,
+        region: form.region || null,
+        referencia: form.referencia || null
+      },
       detalles
     };
+
+    console.log("Payload boleta (enviando):", payload);
 
     try {
       const res = await fetch("http://localhost:8080/api/boletas", {
@@ -55,25 +96,29 @@ export const FormularioCompra = () => {
         body: JSON.stringify(payload)
       });
 
-      if (!res.ok) throw new Error("Error al generar boleta");
+      if (!res.ok) {
+        const text = await res.text().catch(() => null);
+        console.error("Error response:", res.status, text);
+        throw new Error("Error al generar boleta");
+      }
 
       const boleta = await res.json();
       vaciarCarrito();
       navigate(`/boleta/${boleta.id_boleta}`);
     } catch (error) {
-      alert("No se pudo completar la compra");
+      alert("No se pudo completar la compra. Revisa la consola para más detalles.");
       console.error(error);
     }
   };
 
-  const total = carrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
+  const total = carrito.reduce((acc, p) => acc + (Number(p.precio ?? 0) * Number(p.cantidad ?? 1)), 0);
+  const comunasDisponibles = regiones.find(r => r.nombre === form.region)?.comunas || [];
 
   return (
     <div className="container mt-5">
       <h2>🧾 Carrito de compra</h2>
-      <p>Completa la siguiente información para finalizar tu compra.</p>
+      <p>Completa la información para finalizar tu compra.</p>
 
-      {/* 🛒 Tabla del carrito */}
       <table className="table table-bordered align-middle text-center mt-4">
         <thead className="table-light">
           <tr>
@@ -88,23 +133,18 @@ export const FormularioCompra = () => {
           {carrito.map((p, i) => (
             <tr key={i}>
               <td>
-                <img
-                  src={p.foto || "https://via.placeholder.com/80"}
-                  alt={p.nombre}
-                  style={{ width: "80px", height: "80px", objectFit: "cover" }}
-                  className="rounded"
-                />
+                <img src={p.foto || "https://via.placeholder.com/80"} alt={p.nombre}
+                     style={{ width: "80px", height: "80px", objectFit: "cover" }} className="rounded" />
               </td>
               <td>{p.nombre}</td>
-              <td>${p.precio.toLocaleString("es-CL")}</td>
+              <td>${Number(p.precio ?? 0).toLocaleString("es-CL")}</td>
               <td>{p.cantidad}</td>
-              <td>${(p.precio * p.cantidad).toLocaleString("es-CL")}</td>
+              <td>${(Number(p.precio ?? 0) * Number(p.cantidad ?? 1)).toLocaleString("es-CL")}</td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      {/* 👤 Información del cliente */}
       <h4 className="mt-4">👤 Información del cliente</h4>
       <div className="row">
         <div className="col-md-6 mb-2">
@@ -118,7 +158,6 @@ export const FormularioCompra = () => {
         </div>
       </div>
 
-      {/* 📦 Dirección de entrega */}
       <h4 className="mt-4">📦 Dirección de entrega</h4>
       <div className="row">
         <div className="col-md-6 mb-2">
@@ -128,13 +167,15 @@ export const FormularioCompra = () => {
           <input name="numero" value={form.numero} onChange={handleChange} className="form-control" placeholder="Número" />
         </div>
         <div className="col-md-4 mb-2">
-          <input name="comuna" value={form.comuna} onChange={handleChange} className="form-control" placeholder="Comuna" />
+          <select name="comuna" value={form.comuna} onChange={handleChange} className="form-select" disabled={!form.region}>
+            <option value="">Seleccione una comuna</option>
+            {comunasDisponibles.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
         </div>
         <div className="col-md-6 mb-2">
           <select name="region" value={form.region} onChange={handleChange} className="form-select">
-            <option>Región Metropolitana</option>
-            <option>Valparaíso</option>
-            <option>Biobío</option>
+            <option value="">Seleccione una región</option>
+            {regiones.map(r => <option key={r.nombre} value={r.nombre}>{r.nombre}</option>)}
           </select>
         </div>
         <div className="col-md-6 mb-2">
@@ -142,7 +183,6 @@ export const FormularioCompra = () => {
         </div>
       </div>
 
-      {/* 💳 Medio de pago */}
       <h4 className="mt-4">💳 Medio de pago</h4>
       <select name="medioPago" value={form.medioPago} onChange={handleChange} className="form-select mb-4">
         <option>Débito</option>
@@ -150,7 +190,6 @@ export const FormularioCompra = () => {
         <option>Transferencia</option>
       </select>
 
-      {/* ✅ Botón de pago */}
       <div className="text-end">
         <button className="btn btn-success" onClick={handleConfirmarCompra}>
           Pagar ahora ${total.toLocaleString("es-CL")}
