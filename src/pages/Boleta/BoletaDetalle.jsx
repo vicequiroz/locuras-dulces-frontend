@@ -1,89 +1,108 @@
-import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
-export const BoletaDetalle = () => {
+const BoletaDetalle = () => {
   const { id } = useParams();
   const [boleta, setBoleta] = useState(null);
-  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/boletas/${id}`)
-      .then(res => {
-        if (!res.ok) throw new Error("Boleta no encontrada");
-        return res.json();
-      })
-      .then(data => setBoleta(data))
-      .catch(err => {
-        console.error(err);
-        setError(true);
-      });
+    if (!id) {
+      setError("ID de boleta no válido");
+      setLoading(false);
+      return;
+    }
+
+    const fetchBoleta = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/api/boletas/${id}`);
+
+        if (!response.ok) {
+          throw new Error("Boleta no encontrada");
+        }
+
+        const data = await response.json();
+        console.log("Boleta detalle recibida:", data);
+        setBoleta(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBoleta();
   }, [id]);
 
-  if (error) {
-    return <h2 className="text-center mt-5 text-danger">❌ Boleta no encontrada</h2>;
-  }
+  if (loading) return <p>Cargando boleta...</p>;
+  if (error) return <p style={{ color: "red" }}>Error: {error}</p>;
+  if (!boleta) return <p>No se encontró información de la boleta.</p>;
 
-  if (!boleta) {
-    return <h2 className="text-center mt-5">Cargando boleta...</h2>;
-  }
-
-  const { id_boleta, fecha, total, totalAfecto, iva, medioPago, cliente, detalles } = boleta;
+  const detalles = boleta.detalles ?? boleta.detallesBoleta ?? [];
 
   return (
-    <div className="container mt-5">
-      <h2 className="text-success">🧾 Detalle de Boleta #{id_boleta}</h2>
-      <p>Fecha: {fecha}</p>
-      <p>Código orden: ORDER{id_boleta}</p>
+    <div className="container mt-4">
+      <h2 className="mb-3">Detalle Boleta #{boleta.idBoleta}</h2>
 
-      <h4 className="mt-4">👤 Cliente</h4>
-      <ul>
-        <li>Nombre: {cliente?.nombre}</li>
-        <li>Apellido(s): {cliente?.apellido}</li>
-        <li>Email: {cliente?.email}</li>
-      </ul>
+      <div className="card p-3 shadow-sm mb-4">
+        <p><strong>📅 Fecha:</strong> {boleta.fecha}</p>
+        <p><strong>💳 Medio de pago:</strong> {boleta.medioPago}</p>
+        <p><strong>🧾 IVA:</strong> ${boleta.iva?.toLocaleString("es-CL")}</p>
+        <h4 className="fw-bold">💰 Total: ${boleta.total?.toLocaleString("es-CL")}</h4>
+      </div>
 
-      <h4 className="mt-4">📦 Productos comprados</h4>
-      <table className="table table-bordered align-middle text-center">
-        <thead className="table-light">
-          <tr>
-            <th>Imagen</th>
-            <th>Producto</th>
-            <th>Precio</th>
-            <th>Cantidad</th>
-            <th>Subtotal</th>
-          </tr>
-        </thead>
-        <tbody>
-          {detalles.map((d, i) => (
-            <tr key={i}>
-              <td>
-                <img
-                  src={d.producto.foto || "https://via.placeholder.com/80"}
-                  alt={d.producto.nombre}
-                  style={{ width: "80px", height: "80px", objectFit: "cover" }}
-                  className="rounded"
-                />
-              </td>
-              <td>{d.producto.nombre}</td>
-              <td>${d.precio_unitario.toLocaleString("es-CL")}</td>
-              <td>{d.cantidad}</td>
-              <td>${d.subtotal.toLocaleString("es-CL")}</td>
+      <h4>Productos comprados</h4>
+
+      {detalles.length === 0 ? (
+        <p>No hay detalles de productos.</p>
+      ) : (
+        <table className="table table-bordered mt-3">
+          <thead className="table-light">
+            <tr>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Precio unitario</th>
+              <th>Subtotal</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
 
-      <h4 className="mt-4">💳 Resumen de pago</h4>
-      <ul>
-        <li>Total afecto: ${totalAfecto.toLocaleString("es-CL")}</li>
-        <li>IVA (19%): ${iva.toLocaleString("es-CL")}</li>
-        <li><strong>Total pagado: ${total.toLocaleString("es-CL")}</strong></li>
-        <li>Medio de pago: {medioPago}</li>
-      </ul>
+          <tbody>
+            {detalles.map((det, index) => {
+              const nombreProd =
+                det?.productoNombre ??
+                det?.nombreProducto ??
+                det?.producto?.nombre ??
+                "Producto";
 
-      <button className="btn btn-outline-secondary mt-3" onClick={() => window.history.back()}>
-        ← Volver al historial
+              const precio = det.precioUnitario ?? det.precio_unitario ?? 0;
+
+              return (
+                <tr key={index}>
+                  <td>{nombreProd}</td>
+                  <td>{det.cantidad}</td>
+                  <td>${Number(precio).toLocaleString("es-CL")}</td>
+                  <td>
+                    $
+                    {(Number(precio) * Number(det.cantidad)).toLocaleString(
+                      "es-CL"
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
+
+      <button
+        className="btn btn-secondary mt-3"
+        onClick={() => window.history.back()}
+      >
+        Volver
       </button>
     </div>
   );
 };
+
+export default BoletaDetalle;

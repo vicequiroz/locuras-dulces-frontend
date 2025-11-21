@@ -13,10 +13,11 @@ export const CarritoProvider = ({ children }) => {
   }, [carrito]);
 
   const agregarAlCarrito = (producto, cantidad = 1) => {
-    const existe = carrito.find(p => p.id_producto === producto.id_producto);
+    const existe = carrito.find(p => p.id === producto.id);
+
     if (existe) {
       setCarrito(carrito.map(p =>
-        p.id_producto === producto.id_producto
+        p.id === producto.id
           ? { ...p, cantidad: p.cantidad + cantidad }
           : p
       ));
@@ -26,7 +27,7 @@ export const CarritoProvider = ({ children }) => {
   };
 
   const eliminarDelCarrito = (id) => {
-    setCarrito(carrito.filter(p => p.id_producto !== id));
+    setCarrito(carrito.filter(p => p.id !== id));
   };
 
   const vaciarCarrito = () => setCarrito([]);

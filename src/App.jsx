@@ -10,7 +10,7 @@ import { Blogs } from './pages/Blogs/Blogs';
 import { Nosotros } from './pages/Nosotros/Nosotros';
 import { Login } from './pages/Login/Login';
 import { Registro } from './pages/Registro/Registro';
-import { ConfirmacionCompra } from "./componentes/ConfirmacionCompra/ConfirmacionCompra";
+import { CompraFallida } from "./componentes/CompraFallida/CompraFallida";
 
 // 🧩 Componentes de gestión
 import { HomeAdmin } from "./pages/Admin/HomeAdmin";
@@ -26,7 +26,7 @@ import { DetalleProducto } from './pages/DetalleProducto/DetalleProducto';
 import { CarritoPage } from './pages/Carrito/CarritoPage';
 import { BoletaPage } from './pages/Boleta/BoletaPage';
 import { FormularioCompra } from "./pages/FormularioCompra/FormularioCompra";
-import { BoletaDetalle } from './pages/Boleta/BoletaDetalle';
+import  BoletaDetalle  from './pages/Boleta/BoletaDetalle';
 import { ComprasAdmin } from './pages/Admin/ComprasAdmin';
 
 function App() {
@@ -37,15 +37,22 @@ function App() {
           {/* 🏠 Páginas principales */}
           <Route path="/" element={<Home />} />
           <Route path="/nuestros-productos" element={<NuestrosProductos />} />
+          <Route path="/productos" element={<NuestrosProductos />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/nosotros" element={<Nosotros />} />
           <Route path="/contacto" element={<Contacto />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registro" element={<Registro />} />
-          <Route path="/confirmacion" element={<ConfirmacionCompra />} />
+
+          {/* ❌ Compra fallida */}
+          <Route path="/compra-fallida" element={<CompraFallida />} />
+
+          {/* 🛒 Carrito y compra */}
           <Route path="/producto/:id" element={<DetalleProducto />} />
           <Route path="/carrito" element={<CarritoPage />} />
           <Route path="/formulario-compra" element={<FormularioCompra />} />
+
+          {/* 🧾 Boletas */}
           <Route path="/mis-compras" element={<BoletaPage />} />
           <Route path="/boleta/:id" element={<BoletaDetalle />} />
 

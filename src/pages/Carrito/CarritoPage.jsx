@@ -11,15 +11,18 @@ export const CarritoPage = () => {
 
   const actualizarCantidad = (id, nuevaCantidad) => {
     if (nuevaCantidad < 1) return;
+
     const actualizado = carrito.map(p =>
       p.id_producto === id ? { ...p, cantidad: nuevaCantidad } : p
     );
+
     setCarrito(actualizado);
   };
 
   return (
     <div className="container mt-5">
       <h2>🛒 Tu Carrito de Compras</h2>
+
       {carrito.length === 0 ? (
         <p>Tu carrito está vacío.</p>
       ) : (
@@ -29,15 +32,25 @@ export const CarritoPage = () => {
             eliminarDelCarrito={eliminarDelCarrito}
             actualizarCantidad={actualizarCantidad}
           />
-          <div className="text-end fw-bold">Total: ${total}</div>
+
+          <div className="text-end fw-bold">
+            Total: ${total}
+          </div>
+
           <div className="text-end mt-3">
-            <button className="btn btn-warning me-2" onClick={vaciarCarrito}>Vaciar carrito</button>
-            <button className="btn btn-primary me-2" onClick={() => alert("Cantidades actualizadas")}>
-              Actualizar cantidades
+            <button 
+              className="btn btn-warning me-2" 
+              onClick={vaciarCarrito}
+            >
+              Vaciar carrito
             </button>
-              <button className="btn btn-success" onClick={() => navigate("/formulario-compra")}>
-                Finalizar compra
-              </button>
+
+            <button 
+              className="btn btn-success" 
+              onClick={() => navigate("/formulario-compra")}
+            >
+              Finalizar compra
+            </button>
           </div>
         </>
       )}

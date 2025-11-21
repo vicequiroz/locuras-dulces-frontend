@@ -1,7 +1,6 @@
 import React from "react";
 
 export const TablaCarrito = ({ carrito, eliminarDelCarrito, actualizarCantidad }) => {
-  const total = carrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
 
   return (
     <div className="table-responsive mt-4">
@@ -16,9 +15,10 @@ export const TablaCarrito = ({ carrito, eliminarDelCarrito, actualizarCantidad }
             <th>Acción</th>
           </tr>
         </thead>
+
         <tbody>
-          {carrito.map((p, i) => (
-            <tr key={i}>
+          {carrito.map((p) => (
+            <tr key={p.id_producto}>
               <td>
                 <img
                   src={p.foto || "https://via.placeholder.com/80"}
@@ -27,19 +27,27 @@ export const TablaCarrito = ({ carrito, eliminarDelCarrito, actualizarCantidad }
                   className="rounded"
                 />
               </td>
+
               <td>{p.nombre}</td>
+
               <td>${p.precio.toLocaleString("es-CL")}</td>
+
               <td>
                 <input
                   type="number"
                   min="1"
                   value={p.cantidad}
-                  onChange={(e) => actualizarCantidad(p.id_producto, parseInt(e.target.value))}
+                  onChange={(e) => {
+                    const value = Math.max(1, parseInt(e.target.value) || 1);
+                    actualizarCantidad(p.id_producto, value);
+                  }}
                   className="form-control form-control-sm text-center"
                   style={{ maxWidth: "80px", margin: "auto" }}
                 />
               </td>
+
               <td>${(p.precio * p.cantidad).toLocaleString("es-CL")}</td>
+
               <td>
                 <button
                   className="btn btn-danger btn-sm"
@@ -51,10 +59,16 @@ export const TablaCarrito = ({ carrito, eliminarDelCarrito, actualizarCantidad }
             </tr>
           ))}
         </tbody>
+
         <tfoot>
           <tr>
             <td colSpan="4" className="text-end fw-bold">Total</td>
-            <td colSpan="2" className="fw-bold">${total.toLocaleString("es-CL")}</td>
+            <td colSpan="2" className="fw-bold">
+              $
+              {carrito
+                .reduce((acc, p) => acc + p.precio * p.cantidad, 0)
+                .toLocaleString("es-CL")}
+            </td>
           </tr>
         </tfoot>
       </table>
