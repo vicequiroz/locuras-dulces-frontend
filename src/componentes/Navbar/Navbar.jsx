@@ -29,10 +29,14 @@ export function Navbar() {
               height="120"
             />
           </Link>
+
           <div className="text-white">
             <span className="fw-bold">
-              {usuario ? `Hola, ${usuario.nombre} (${usuario.rol}) 👋` : "Bienvenido, visitante"}
+              {usuario
+                ? `Hola, ${usuario.nombre} (${usuario.rol}) 👋`
+                : "Bienvenido, visitante"}
             </span>
+
             {usuario && (
               <button
                 onClick={cerrarSesion}
@@ -62,6 +66,8 @@ export function Navbar() {
             <li className="nav-item">
               <Link className="nav-link" to="/">Home</Link>
             </li>
+
+            {/* Opciones del administrador */}
             {usuario?.rol === "ADMIN" && (
               <>
                 <li className="nav-item">
@@ -72,6 +78,8 @@ export function Navbar() {
                 </li>
               </>
             )}
+
+            {/* Opciones de usuario normal */}
             {usuario?.rol !== "ADMIN" && (
               <>
                 <li className="nav-item">
@@ -86,6 +94,16 @@ export function Navbar() {
                 <li className="nav-item">
                   <Link className="nav-link" to="/contacto">Contacto</Link>
                 </li>
+
+                {/* Mis Compras */}
+                {usuario && (
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/mis-compras">
+                      📦 Mis compras
+                    </Link>
+                  </li>
+                )}
+
                 <li className="nav-item">
                   <Link className="nav-link" to="/carrito">🛒 Carrito</Link>
                 </li>

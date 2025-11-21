@@ -1,4 +1,5 @@
 import React from "react";
+import "./FormularioCantidad.css";
 
 export const FormularioCantidad = ({ cantidad, setCantidad, stock }) => {
   const aumentar = () => {
@@ -10,11 +11,10 @@ export const FormularioCantidad = ({ cantidad, setCantidad, stock }) => {
   };
 
   return (
-    <div className="d-flex align-items-center gap-2">
-      <button className="btn btn-outline-secondary" onClick={disminuir}>-</button>
-      <span>{cantidad}</span>
-      <button className="btn btn-outline-secondary" onClick={aumentar}>+</button>
-      <span className="text-muted ms-2">Stock disponible: {stock}</span>
+    <div className="cantidad-container">
+      <button className="btn-cantidad" onClick={disminuir}>-</button>
+      <span className="cantidad-numero">{cantidad}</span>
+      <button className="btn-cantidad" onClick={aumentar}>+</button>
     </div>
   );
 };

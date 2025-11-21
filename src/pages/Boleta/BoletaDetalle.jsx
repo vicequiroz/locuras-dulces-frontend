@@ -36,15 +36,17 @@ const BoletaDetalle = () => {
   }, [id]);
 
   if (loading) return <p>Cargando boleta...</p>;
-  if (error) return <p style={{ color: "red" }}>Error: {error}</p>;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
   if (!boleta) return <p>No se encontró información de la boleta.</p>;
 
+  // Asegurar compatibilidad con diferentes nombres usados en backend
   const detalles = boleta.detalles ?? boleta.detallesBoleta ?? [];
 
   return (
     <div className="container mt-4">
-      <h2 className="mb-3">Detalle Boleta #{boleta.idBoleta}</h2>
+      <h2 className="mb-3">Detalle de Boleta #{boleta.idBoleta}</h2>
 
+      {/* Información general */}
       <div className="card p-3 shadow-sm mb-4">
         <p><strong>📅 Fecha:</strong> {boleta.fecha}</p>
         <p><strong>💳 Medio de pago:</strong> {boleta.medioPago}</p>
@@ -52,42 +54,44 @@ const BoletaDetalle = () => {
         <h4 className="fw-bold">💰 Total: ${boleta.total?.toLocaleString("es-CL")}</h4>
       </div>
 
+      {/* Tabla de productos */}
       <h4>Productos comprados</h4>
 
       {detalles.length === 0 ? (
-        <p>No hay detalles de productos.</p>
+        <p>No hay detalles registrados.</p>
       ) : (
         <table className="table table-bordered mt-3">
           <thead className="table-light">
             <tr>
               <th>Producto</th>
               <th>Cantidad</th>
-              <th>Precio unitario</th>
+              <th>Precio Unitario</th>
               <th>Subtotal</th>
             </tr>
           </thead>
 
           <tbody>
-            {detalles.map((det, index) => {
-              const nombreProd =
-                det?.productoNombre ??
-                det?.nombreProducto ??
-                det?.producto?.nombre ??
+            {detalles.map((det) => {
+              const nombreProducto =
+                det.producto?.nombre ||
+                det.productoNombre ||
                 "Producto";
 
-              const precio = det.precioUnitario ?? det.precio_unitario ?? 0;
+              const precioUnitario =
+                det.precioUnitario ??
+                det.precio_unitario ??
+                0;
+
+              const subtotal =
+                det.subtotal ??
+                precioUnitario * det.cantidad;
 
               return (
-                <tr key={index}>
-                  <td>{nombreProd}</td>
+                <tr key={det.idDetalle ?? det.idProducto}>
+                  <td>{nombreProducto}</td>
                   <td>{det.cantidad}</td>
-                  <td>${Number(precio).toLocaleString("es-CL")}</td>
-                  <td>
-                    $
-                    {(Number(precio) * Number(det.cantidad)).toLocaleString(
-                      "es-CL"
-                    )}
-                  </td>
+                  <td>${Number(precioUnitario).toLocaleString("es-CL")}</td>
+                  <td>${Number(subtotal).toLocaleString("es-CL")}</td>
                 </tr>
               );
             })}
@@ -95,10 +99,7 @@ const BoletaDetalle = () => {
         </table>
       )}
 
-      <button
-        className="btn btn-secondary mt-3"
-        onClick={() => window.history.back()}
-      >
+      <button className="btn btn-secondary mt-3" onClick={() => window.history.back()}>
         Volver
       </button>
     </div>

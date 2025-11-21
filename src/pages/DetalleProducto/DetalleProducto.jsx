@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import { CarritoContext } from "../../context/CarritoContext";
 import { FormularioCantidad } from "../../componentes/FormularioCantidad/FormularioCantidad";
+import "./DetalleProducto.css";
 
 export const DetalleProducto = () => {
   const { id } = useParams();
@@ -11,20 +12,17 @@ export const DetalleProducto = () => {
   const [alertaStock, setAlertaStock] = useState("");
   const { carrito, agregarAlCarrito } = useContext(CarritoContext);
 
-  // Cargar producto
   useEffect(() => {
     fetch(`http://localhost:8080/api/productos/${id}`)
-      .then(res => res.json())
-      .then(data => setProducto(data))
-      .catch(err => console.error("Producto no encontrado", err));
+      .then((res) => res.json())
+      .then((data) => setProducto(data))
+      .catch((err) => console.error("Producto no encontrado", err));
   }, [id]);
 
-  // Derivados del producto y carrito (si producto aún no está, usamos valores seguros)
-  const enCarrito = producto ? carrito.find(p => p.id_producto === producto.id) : null;
+  const enCarrito = producto ? carrito.find((p) => p.id_producto === producto.id) : null;
   const cantidadEnCarrito = enCarrito?.cantidad || 0;
   const stockDisponible = producto ? producto.stock - cantidadEnCarrito : 0;
 
-  // Alerta si el stock es bajo
   useEffect(() => {
     if (stockDisponible <= 5 && stockDisponible > 0) {
       setAlertaStock(`⚠️ Quedan solo ${stockDisponible} unidad(es) disponibles.`);
@@ -37,13 +35,19 @@ export const DetalleProducto = () => {
     if (!producto) return;
 
     if (cantidad > stockDisponible) {
-      setConfirmacion(`Solo quedan ${stockDisponible} unidad(es) disponibles. Ajusta la cantidad antes de agregar.`);
+      setConfirmacion(
+        `Solo quedan ${stockDisponible} unidades disponibles. Ajusta la cantidad antes de agregar.`
+      );
       return;
     }
 
     agregarAlCarrito({ ...producto, id_producto: producto.id }, cantidad);
     const total = producto.precio * cantidad;
-    setConfirmacion(`${cantidad} unidad(es) de ${producto.nombre} agregadas al carrito. Total: $${total.toLocaleString("es-CL")}`);
+    setConfirmacion(
+      `${cantidad} unidad(es) de ${producto.nombre} agregadas al carrito. Total: $${total.toLocaleString(
+        "es-CL"
+      )}`
+    );
     setTimeout(() => setConfirmacion(""), 3000);
   };
 
@@ -52,28 +56,26 @@ export const DetalleProducto = () => {
   }
 
   return (
-    <div className="container mt-5">
-      <div className="row justify-content-center align-items-center">
-        <div className="col-md-5 text-center mb-4 mb-md-0">
+    <div className="detalle-producto-container">
+      <div className="detalle-producto-card">
+        <div className="detalle-producto-img-wrapper">
           <img
             src={producto.foto || "https://via.placeholder.com/300"}
             alt={producto.nombre}
-            className="img-fluid rounded"
-            style={{ maxHeight: "300px" }}
+            className="detalle-producto-img"
           />
         </div>
-        <div className="col-md-7">
-          <h2 className="mb-3">{producto.nombre}</h2>
-          <p className="mb-3">{producto.descripcion}</p>
-          <h4 className="mb-4 text-success">${producto.precio.toLocaleString("es-CL")}</h4>
 
-          <p className="text-muted">Stock disponible: {stockDisponible}</p>
+        <div className="detalle-producto-info">
+          <h2>{producto.nombre}</h2>
+          <p className="descripcion">{producto.descripcion}</p>
+          <h4 className="precio">${producto.precio.toLocaleString("es-CL")}</h4>
+
+          <p className="stock-info">Stock disponible: {stockDisponible}</p>
           {cantidadEnCarrito > 0 && (
-            <p className="text-muted">Ya tienes {cantidadEnCarrito} unidad(es) en el carrito.</p>
+            <p className="en-carrito">Ya tienes {cantidadEnCarrito} en el carrito.</p>
           )}
-          {alertaStock && (
-            <div className="alert alert-warning py-2">{alertaStock}</div>
-          )}
+          {alertaStock && <div className="alerta-stock">{alertaStock}</div>}
 
           <FormularioCantidad
             cantidad={cantidad}
@@ -82,16 +84,18 @@ export const DetalleProducto = () => {
           />
 
           <button
-            className="btn btn-success mt-3"
+            className="btn-agregar"
             onClick={handleAgregar}
             disabled={stockDisponible === 0}
           >
             {stockDisponible === 0 ? "Sin stock disponible" : "Agregar al carrito"}
           </button>
 
-          {confirmacion && (
-            <div className="mt-3 text-success fw-bold">{confirmacion}</div>
-          )}
+          <button className="btn-carrito" onClick={() => (window.location.href = "/carrito")}>
+            Ir al carrito 🛒
+          </button>
+
+          {confirmacion && <div className="mensaje-confirmacion">{confirmacion}</div>}
         </div>
       </div>
     </div>
