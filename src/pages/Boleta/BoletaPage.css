@@ -1,0 +1,74 @@
+/* CONTENEDOR PRINCIPAL */
+.boleta-page-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+/* TÍTULO */
+.boleta-page-title {
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #d8418d;
+}
+
+/* MENSAJE VACÍO */
+.boleta-vacio {
+  text-align: center;
+  font-size: 1.1rem;
+  margin-top: 40px;
+  color: #777;
+}
+
+/* LISTA DE BOLETAS */
+.boletas-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* TARJETA DE CADA BOLETA */
+.boleta-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0px 4px 12px rgba(216, 65, 141, 0.15);
+  border-left: 6px solid #ff77d8;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.boleta-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 8px 18px rgba(216, 65, 141, 0.25);
+}
+
+/* TITULO DE BOLETA */
+.boleta-card-title {
+  font-weight: 700;
+  color: #d8418d;
+  margin-bottom: 10px;
+}
+
+/* TOTAL DESTACADO */
+.boleta-total {
+  font-weight: 700;
+  color: #0db434;
+  margin-top: 10px;
+}
+
+/* BOTÓN */
+.btn-detalle {
+  background-color: #ff77d8;
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 8px;
+  margin-top: 10px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.btn-detalle:hover {
+  background-color: #e34cb8;
+}
