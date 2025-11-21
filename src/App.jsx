@@ -28,6 +28,7 @@ import { BoletaPage } from './pages/Boleta/BoletaPage';
 import { FormularioCompra } from "./pages/FormularioCompra/FormularioCompra";
 import  BoletaDetalle  from './pages/Boleta/BoletaDetalle';
 import { ComprasAdmin } from './pages/Admin/ComprasAdmin';
+import { EstadisticasAdmin } from "./pages/Admin/EstadisticasAdmin";
 
 function App() {
   return (
@@ -62,6 +63,7 @@ function App() {
           <Route path="/editar-producto/:id" element={<EditarProducto />} />
           <Route path="/inventario" element={<Inventario />} />
           <Route path="/gestion-usuarios" element={<GestionUsuarios />} />
+          <Route path="/admin/estadisticas" element={<EstadisticasAdmin />} />
           <Route path="/crear-usuario" element={<CrearUsuario />} />
           <Route path="/editar-usuario/:id" element={<EditarUsuario />} />
           <Route path="/compras-admin" element={<ComprasAdmin />} />

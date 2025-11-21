@@ -35,13 +35,22 @@ export function HomeAdmin() {
         {/* Sidebar lateral */}
         <div className="sidebar">
           <h2>Panel Admin</h2>
+
           <Link className="sidebar-btn" to="/gestion-usuarios">
             Gestión de Usuarios
           </Link>
+
           <Link className="sidebar-btn" to="/inventario">
             Gestión de Productos
           </Link>
-       
+
+          <Link className="sidebar-btn" to="/compras-admin">
+            Compras / Ventas
+          </Link>
+
+          <Link className="sidebar-btn" to="/admin/estadisticas">
+            Estadísticas
+          </Link>
         </div>
 
         {/* Contenido principal */}
@@ -53,8 +62,6 @@ export function HomeAdmin() {
             destaca productos en tu tienda.
           </p>
 
-          {/* Estadísticas del sistema */}
-          <EstadisticasDashboard />
         </div>
       </div>
       <Footer />
