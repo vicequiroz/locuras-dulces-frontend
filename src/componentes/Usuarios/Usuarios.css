@@ -1,4 +1,4 @@
-/* Espaciado general 
+/* Espaciado general */
 .container {
   max-width: 900px;
   margin: auto;
@@ -7,7 +7,7 @@
 /* Título centrado */
 h4 {
   font-weight: 600;
-  color: #5c3d91;
+  color: #cc1fdb;
 }
 
 /* Etiquetas */
@@ -32,23 +32,25 @@ h4 {
 
 /* Botones */
 .btn-primary {
-  background-color: #5c3d91;
-  border-color: #5c3d91;
+  background-color: #e956b8; 
+  border-color: #d40991;
+  color: #fff;
 }
 
 .btn-primary:hover {
-  background-color: #4a2f78;
-  border-color: #4a2f78;
+  background-color: #03be99;
+  border-color: #13f10c;
 }
 
 .btn-secondary {
-  background-color: #ccc;
-  border-color: #aaa;
+  background-color: #f1ae1c; 
+  border-color: #f77118;
+  color: #fff;
 }
 
 .btn-secondary:hover {
-  background-color: #bbb;
-  border-color: #999;
+  background-color: #03be99;
+  border-color: #13f10c;
 }
 
 /* Alertas */

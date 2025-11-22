@@ -99,14 +99,15 @@ export function Usuarios() {
             {usuariosFiltrados.map(u => (
               <tr key={u.id} style={{ opacity: u.activo ? 1 : 0.5, whiteSpace: 'nowrap' }}>
                 <td>{u.id}</td>
-                <td>{u.nombre}</td>
-                <td>{u.correo}</td>
+                <td>{`${u.nombre} ${u.apellido || ''}`}</td>
+                <td>{u.email}</td>
                 <td>{u.telefono || '—'}</td>
-                <td>{u.direccion || '—'}</td>
+                <td>{u.calle && u.numero ? `${u.calle} ${u.numero}` : '—'}</td>
                 <td>{u.region || '—'}</td>
                 <td>{u.comuna || '—'}</td>
-                <td>{u.fechaNacimiento || '—'}</td>
-                <td>{u.fechaRegistro?.slice(0, 10) || '—'}</td>
+                <td>{u.fechaNacimiento ? new Intl.DateTimeFormat('es-CL').format(new Date(u.fechaNacimiento)) : '—'}</td>
+                <td>{u.fechaRegistro ? new Intl.DateTimeFormat('es-CL').format(new Date(u.fechaRegistro)) : '—'}
+                </td>
                 <td>{u.rol}</td>
                 <td>
                   <span className={`badge ${u.activo ? "bg-success" : "bg-secondary"}`}>

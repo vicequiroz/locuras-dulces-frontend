@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,  useNavigate } from "react-router-dom";
 import "./BoletaDetalle.css";
 
 const BoletaDetalle = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [boleta, setBoleta] = useState(null);
   const [detallesConProducto, setDetallesConProducto] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -60,7 +61,7 @@ const BoletaDetalle = () => {
       </h2>
 
       <div className="boleta-info card-elegante">
-        <p><strong>📅 Fecha:</strong> {boleta.fecha}</p>
+        <p><strong>📅 Fecha:</strong> {boleta.fecha ? new Date(boleta.fecha).toLocaleDateString("es-CL") : "—"}</p>
         <p><strong>💳 Medio de pago:</strong> {boleta.medioPago}</p>
         <p><strong>🧾 IVA:</strong> ${boleta.iva?.toLocaleString("es-CL")}</p>
         <h3 className="total-boleta">💰 Total: ${boleta.total?.toLocaleString("es-CL")}</h3>
@@ -117,8 +118,8 @@ const BoletaDetalle = () => {
       )}
 
       <div className="btn-volver-wrapper">
-        <button className="btn-volver" onClick={() => window.history.back()}>
-          ← Volver
+        <button className="btn-volver" onClick={() => navigate("/")}> 
+          ← Volver al inicio
         </button>
       </div>
     </div>

@@ -39,7 +39,7 @@ export const BoletaPage = () => {
                   Boleta #{boleta.idBoleta}
                 </h5>
 
-                <p>📅 Fecha: {boleta.fecha}</p>
+                <p>📅 Fecha: {new Date(boleta.fecha).toLocaleDateString("es-CL")}</p>
                 <p>💳 Medio de pago: {boleta.medioPago}</p>
                 <p>🧾 IVA: ${boleta.iva?.toLocaleString("es-CL")}</p>
 
