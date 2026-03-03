@@ -1,99 +1,108 @@
-**Aplicación Frontend con React, CSS, JavaScript y JSON Server
-Asignatura: Desarrollo Fullstack 2
-Sección: 003V
-Profesora: Viviana Poblete López
-Integrantes: Paula Rojas Oyarzun – Vicente Quiroz Gómez**
+# 🍬 Locuras Dulces – Frontend
 
+Aplicación web desarrollada con React + Vite para el sistema e-commerce **Locuras Dulces**.
 
-# 🍬 Locuras Dulces
-
-**Locuras Dulces** es una tienda virtual dedicada a la venta de productos de confitería, chocolates y snacks.  
-El sistema permite a los usuarios registrarse, iniciar sesión, navegar por el catálogo, enviar mensajes de contacto y al administrador gestionar productos, usuarios y mensajes a través de un panel administrativo.
+Este proyecto corresponde a la versión frontend del sistema, el cual consume una API REST desarrollada en Spring Boot.  
+Actualmente se encuentra en proceso de mejora y refactorización como proyecto de portafolio profesional.
 
 ---
 
-## 🧩 Descripción del Proyecto
+## 🚀 Descripción
 
-El objetivo del proyecto es desarrollar una **aplicación web full stack** que conecte un **backend en Spring Boot** con un **frontend en React (Vite)**, integrando una base de datos MySQL.  
-El sistema cuenta con un **perfil de cliente** (compra y contacto) y un **perfil de administrador** (gestión interna del negocio).  
-El desarrollo sigue buenas prácticas de arquitectura, seguridad y validaciones tanto del lado cliente como servidor.
+Locuras Dulces es una tienda virtual de productos de confitería que permite:
 
----
+- Registro e inicio de sesión de usuarios
+- Navegación por catálogo de productos
+- Gestión de carrito de compras
+- Envío de mensajes de contacto
+- Panel administrativo para gestión interna
 
-## 🛠️ Tecnologías Utilizadas
-
-### 🔹 Backend
-- **Java 17**
-- **Spring Boot 3**
-- **Maven**
-- **Spring Data JPA**
-- **MySQL**
-- **Swagger UI** (documentación de API)
-- **Lombok**
-
-### 🔹 Frontend
-- **React + Vite**
-- **JavaScript (ES6+)**
-- **Bootstrap 5 / CSS3**
-- **React Router DOM**
-- **Fetch / Axios**
-- **SweetAlert2** (alertas visuales)
+El frontend se conecta a una API REST desarrollada en Spring Boot.
 
 ---
 
-## ⚙️ Instrucciones de Instalación
+## 🏗️ Arquitectura
 
-### 📂 Clonar el proyecto (dos ramas separadas)
+El sistema está dividido en dos repositorios independientes:
 
-Ejecuta estos comandos en la terminal para descargar ambas partes del proyecto:
+- Backend: API REST con Spring Boot
+- Frontend: Aplicación SPA con React
 
-# Clonar rama Backend
-git clone -b Backend https://github.com/Paula-roja/Locuras_Dulces.git Locuras_Backend
+El frontend consume endpoints protegidos y públicos mediante HTTP (Fetch / Axios).
 
-# Clonar rama Frontend
-git clone -b Frontend_Locuras_Dulces https://github.com/Paula-roja/Locuras_Dulces.git Locuras_Frontend
+---
 
+## 🛠️ Tecnologías utilizadas
 
-## 🧱 Configuración de Base de Datos MySQL
-Para que el backend funcione correctamente, primero debes crear la base de datos en **MySQL Workbench** llamada bd_locurasdulces o desde consola con el siguiente comando:
+- React + Vite
+- JavaScript (ES6+)
+- React Router DOM
+- Bootstrap 5
+- CSS3
+- Axios
+- SweetAlert2
+- Chart.js
 
-CREATE DATABASE bd_locurasdulces;
+---
 
-## 🧱 Base de Datos MySQL, luego poblar las tablas con los siguientes scripts
+## ⚙️ Instalación y ejecución local
 
-🔹 Para la tabla Categoria Insertar:
+1️⃣ Clonar el repositorio:
 
-INSERT INTO categoria (nombre) VALUES
-('Snacks y Sufles'),
-('Chocolates y Alfajores'),
-('Dulces y Caramelos Tradicionales'),
-('Chicles y Gomitas');
+git clone https://github.com/vicequiroz/locuras-dulces-frontend.git 
 
-🔹 Para ingresar el usuario administrador a la base de datos, debes ejecutar este INSERT para poder acceder por login 
-con las credenciales: admin@locurasdulces.cl / admin123 
+2️⃣ Instalar dependencias:
 
-INSERT INTO usuario (nombre, correo, contrasena, rol, activo, fecha_registro)
-VALUES (
-    'Admin',
-    'admin@locurasdulces.cl',
-    '$2a$10$0/B8Bea2im8iYnCEkibaHuroPoxdNf9ZOLX7GP9yEnusoojm6qiQm',
-    'SUPER-ADMIN',
-    1,
-    NOW()
-);
-
-
-###🔹 Comandos para la ejecución del backend 
-cd Locuras_Backend
-./mvnw spring-boot:run
-
-###🔹 Comandos para la ejecucción del frontend
-cd Locuras_Frontend
 npm install
+
+3️⃣ Ejecutar servidor de desarrollo:
+
+
 npm run dev
 
-###🔹 Comandos para la ejecucción de las estadisticas
-npm install chart.js react-chartjs-2
+La aplicación se ejecutará en:
+http://localhost:5173
+
+---
+
+## 🔗 Backend requerido
+
+Este proyecto requiere que el backend esté ejecutándose correctamente.
+Repositorio del backend:
+
+https://github.com/vicequiroz/locuras-dulces-backend
+
+---
+
+## 📈 Estado del proyecto
+
+🔄 Proyecto en proceso de mejora continua.
+
+- Próximas mejoras planificadas:
+
+- Implementación completa de autenticación JWT
+
+- Protección de rutas privadas
+
+- Mejor manejo de estado global
+
+- Refactorización de componentes
+
+- Mejora en UX/UI
+
+- Deploy en entorno cloud
+
+---
+
+## 👨‍💻 Autor
+
+Vicente Quiroz
+Ingeniero en transición a Desarrollador Full Stack
+Proyecto iniciado como trabajo académico y actualmente evolucionado como proyecto de portafolio profesional.
+
+
+
+
 
 
 
